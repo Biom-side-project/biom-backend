@@ -1,0 +1,7 @@
+server:
+  port: 8130
+
+  error:
+    include-exception: true
+    include-message: always
+    include-stacktrace: never
