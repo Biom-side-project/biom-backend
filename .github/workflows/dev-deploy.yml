@@ -3,8 +3,6 @@ name: dev CI/CD to Elastic Beanstalk
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
 
 permissions:
   contents: read
@@ -36,8 +34,8 @@ jobs:
 
       - name: Generate deployment package
         run: |
-          mkdir -p deploy
-          cp -r build/libs/*.jar deploy/build/libs/*.jar
+          mkdir -p deploy/build/libs
+          cp -r build/libs/ deploy/build/libs/
           cp Dockerfile deploy/Dockerfile
           cd deploy && zip -r deploy.zip .
 
