@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
     
+    @GetMapping("/")
+    public String home(){
+        return "health";
+    }
+    
+    
     @GetMapping("/health")
     public String health(@Nullable @RequestParam String string){
         return "health check... received string: " + string;

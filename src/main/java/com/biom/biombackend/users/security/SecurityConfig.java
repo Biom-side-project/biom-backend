@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     
-    private static final String[] permittingEndpoints = {"/health"};
+    private static final String[] permittingEndpoints = {"/", "/health"};
     
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
