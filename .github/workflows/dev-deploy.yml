@@ -35,7 +35,7 @@ jobs:
       - name: Generate deployment package
         run: |
           mkdir -p deploy/build/libs
-          cp -r build/libs/ deploy/build/libs/
+          cp build/libs/*.jar deploy/build/libs/
           cp Dockerfile deploy/Dockerfile
           cd deploy && zip -r deploy.zip .
 
@@ -48,4 +48,4 @@ jobs:
           environment_name: Biombackend-env-1
           version_label: biom-backend-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
-          deployment_package: deploy.zip
+          deployment_package: deploy/deploy.zip

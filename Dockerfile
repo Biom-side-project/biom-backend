@@ -8,4 +8,4 @@ ARG JAR_FILE=build/libs/biom-backend-0.0.1-SNAPSHOT.jar
 
 ADD ${JAR_FILE} /biom-backend.jar
 
-ENTRYPOINT ["java", "-jar","biom-backend.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=local", "-jar","biom-backend.jar"]
