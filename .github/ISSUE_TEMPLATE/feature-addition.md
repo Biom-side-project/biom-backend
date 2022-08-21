@@ -1,5 +1,5 @@
 ---
-name: "[FEAT]"
+name: Feature addition
 about: Describe this issue template's purpose here.
 title: "[FEAT]"
 labels: donkey, enhancement
