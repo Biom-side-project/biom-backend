@@ -13,9 +13,24 @@ public class TestController {
         return "health";
     }
     
-    
     @GetMapping("/health")
     public String health(@Nullable @RequestParam String string){
         return "health check... received string: " + string;
     }
+    
+    @GetMapping("/test/error-test")
+    public String error() throws Exception {
+        new Any().throwError();
+        return "health check... received string: ";
+    }
+    
+
+    
+    private static class Any{
+        void throwError() throws Exception {
+            throw new Exception("예시 에러 입니다.");
+        }
+    }
+    
+    
 }
