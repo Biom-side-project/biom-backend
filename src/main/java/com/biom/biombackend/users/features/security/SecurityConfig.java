@@ -1,4 +1,4 @@
-package com.biom.biombackend.users.security;
+package com.biom.biombackend.users.features.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
     
-    private static final String[] permittingEndpoints = {"/", "/health"};
+    private static final String[] permittingEndpoints = {"/", "/health","/test/**", "/api/v1/login/**"};
     
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
