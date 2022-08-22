@@ -8,4 +8,6 @@ import lombok.Data;
 public class SocialLoginResponse {
     private String accessToken;
     private String refreshToken;
+    private String accessExpireTime;
+    private String refreshExpireTime;
 }
