@@ -15,6 +15,10 @@ spring:
         format_sql: true
     show-sql: true
 
+  config:
+    activate:
+      on-profile: local
+
 logging:
   level:
     com:

@@ -29,6 +29,7 @@ public class ErrorResponseBody {
     }
     
     public static ErrorResponseBody of(Exception exception, String requestUri) {
+        // TODO: 메시지가 있으면 넣고, 없으면 그대로
         return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value(), requestUri));
     }
     
