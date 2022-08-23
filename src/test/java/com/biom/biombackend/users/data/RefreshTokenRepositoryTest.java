@@ -1,13 +1,11 @@
 package com.biom.biombackend.users.data;
 
-import com.biom.biombackend.users.data.RefreshTokenEntity;
-import com.biom.biombackend.users.data.RefreshTokenRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 class RefreshTokenRepositoryTest {
