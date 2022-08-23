@@ -17,7 +17,7 @@ import java.util.Objects;
 class DefaultJwtManager implements JwtManager {
     
     private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;   // 30분
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 1000L;   // 30분 // 30초
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 60 * 60 * 24 * 1000L; // 7일
     
     private String secretKeyString;
