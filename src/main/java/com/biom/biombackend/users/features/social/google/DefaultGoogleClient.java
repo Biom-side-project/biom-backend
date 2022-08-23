@@ -2,7 +2,6 @@ package com.biom.biombackend.users.features.social.google;
 
 import com.biom.biombackend.users.features.social.JacksonOAuthAttributes;
 import com.biom.biombackend.users.features.social.SocialProvider;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ class DefaultGoogleClient implements GoogleClient {
     private final ObjectMapper objectMapper;
     
     @SneakyThrows
-    public JacksonOAuthAttributes.GoogleOAuthAttributes getUserInfo(GetUserInfo command){
+    public JacksonOAuthAttributes getUserInfo(GetUserInfo command){
         log.debug("handling: {}", command);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + command.getAccessToken());
@@ -43,12 +42,14 @@ class DefaultGoogleClient implements GoogleClient {
             body = restTemplate.exchange(request, String.class).getBody();
             jsonNode = Objects.requireNonNull(objectMapper.readTree(body));
             attributes = JacksonOAuthAttributes.of(SocialProvider.GOOGLE).attributes(jsonNode).build();
+            log.debug("Google attributes: {}", attributes);
+            log.debug("attributes.getEmail(): {}", attributes.getEmail());
     
         } catch (Exception exception) {
             exception.printStackTrace();
         }
         
-        log.debug("recieved attribbute: {}", attributes);
-        return (JacksonOAuthAttributes.GoogleOAuthAttributes) attributes;
+        log.debug("recieved attribute: {}", attributes);
+        return attributes;
     }
 }

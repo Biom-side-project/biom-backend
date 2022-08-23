@@ -8,5 +8,5 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class CreateAccessToken {
-    private String username;
+    private String email;
 }

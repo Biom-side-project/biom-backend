@@ -2,9 +2,6 @@ package com.biom.biombackend.users.features.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -13,10 +10,10 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 class SpringJwtManager implements JwtManager {
     
     private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
@@ -24,18 +21,20 @@ class SpringJwtManager implements JwtManager {
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 60 * 60 * 24 * 1000L; // 7일
     
     private String secretKeyString;
-    private Key secretKey;
+    private final Key secretKey;
     
     public SpringJwtManager(@Value("${users.jwt.secret}") String secret) {
+        log.info("SpringJwtManager initiating with secret: {}", secret);
         this.secretKeyString = secret;
-        byte[] keyBytes = Base64.getDecoder().decode(secretKeyString);
+        byte[] keyBytes = Base64.getDecoder().decode(secretKeyString); //TODO: secretKeyString 길이 4인지 확인로직
         this.secretKey = new SecretKeySpec(keyBytes, ALGORITHM.getJcaName());
     }
     
     @Override
     public String createAccessToken(CreateAccessToken command){
+        Objects.requireNonNull(command.getEmail());
         return Jwts.builder()
-                       .setSubject(command.getUsername())
+                       .setSubject(command.getEmail())
                        .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
                        .signWith(ALGORITHM, secretKey)
                    .compact();
@@ -43,8 +42,9 @@ class SpringJwtManager implements JwtManager {
     
     @Override
     public String createRefreshToken(CreateRefreshToken command){
+        Objects.requireNonNull(command.getEmail());
         return Jwts.builder()
-                       .setSubject(command.getUsername())
+                       .setSubject(command.getEmail())
                        .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRE_TIME))
                        .signWith(ALGORITHM, secretKey)
                    .compact();
@@ -52,6 +52,7 @@ class SpringJwtManager implements JwtManager {
     
     @Override
     public String getExpireTimeFromToken(String token) {
+        Objects.requireNonNull(token);
         return Jwts.parser()
                        .setSigningKey(secretKey)
                    .parseClaimsJws(token)
@@ -62,6 +63,7 @@ class SpringJwtManager implements JwtManager {
     
     @Override
     public String resolveUsername(String token) {
+        Objects.requireNonNull(token);
         return Jwts.parser()
                        .setSigningKey(secretKey)
                        .parseClaimsJws(token)
