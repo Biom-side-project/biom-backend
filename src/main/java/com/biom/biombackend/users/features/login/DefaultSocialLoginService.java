@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class SpringSocialLoginService implements SocialLoginService {
+class DefaultSocialLoginService implements SocialLoginService {
     
     private final JwtManager jwtManager;
     private final GoogleClient googleClient;

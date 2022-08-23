@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Slf4j
 @Component
-class SpringJwtManager implements JwtManager {
+class DefaultJwtManager implements JwtManager {
     
     private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;   // 30분
@@ -23,7 +23,7 @@ class SpringJwtManager implements JwtManager {
     private String secretKeyString;
     private final Key secretKey;
     
-    public SpringJwtManager(@Value("${users.jwt.secret}") String secret) {
+    public DefaultJwtManager(@Value("${users.jwt.secret}") String secret) {
         log.info("SpringJwtManager initiating with secret: {}", secret);
         this.secretKeyString = secret;
         byte[] keyBytes = Base64.getDecoder().decode(secretKeyString); //TODO: secretKeyString 길이 4인지 확인로직
