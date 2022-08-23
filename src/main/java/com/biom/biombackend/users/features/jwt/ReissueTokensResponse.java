@@ -1,11 +1,11 @@
-package com.biom.biombackend.users.features.login;
+package com.biom.biombackend.users.features.jwt;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
 @Data
-public class SocialLoginResponse {
+@Builder
+public class ReissueTokensResponse {
     private String accessToken;
     private String refreshToken;
     private String accessExpireTime;
