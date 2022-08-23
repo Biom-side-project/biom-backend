@@ -1,11 +1,7 @@
 package com.biom.biombackend.users.features.login;
 
-import com.biom.biombackend.users.data.BiomUser;
-import com.biom.biombackend.users.data.BiomUserRepository;
-import com.biom.biombackend.users.data.Role;
-import com.biom.biombackend.users.features.jwt.CreateAccessToken;
-import com.biom.biombackend.users.features.jwt.CreateRefreshToken;
-import com.biom.biombackend.users.features.jwt.JwtManager;
+import com.biom.biombackend.users.data.*;
+import com.biom.biombackend.users.features.jwt.*;
 import com.biom.biombackend.users.features.social.JacksonOAuthAttributes;
 import com.biom.biombackend.users.features.social.SocialProvider;
 import com.biom.biombackend.users.features.social.google.GetUserInfo;
@@ -24,6 +20,7 @@ class DefaultSocialLoginService implements SocialLoginService {
     private final JwtManager jwtManager;
     private final GoogleClient googleClient;
     private final BiomUserRepository biomUserRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
     
     @Override
     public SocialLoginResponse loginNaver(SocialLoginRequest request) {
@@ -34,8 +31,8 @@ class DefaultSocialLoginService implements SocialLoginService {
     
     @Override
     @Transactional
-    public SocialLoginResponse loginGoogle(SocialLoginRequest request) {
-        JacksonOAuthAttributes userInfo = googleClient.getUserInfo(GetUserInfo.builder().accessToken(request.getAccessToken()).build());
+    public SocialLoginResponse loginGoogle(ProcessLogin command) {
+        JacksonOAuthAttributes userInfo = googleClient.getUserInfo(GetUserInfo.builder().accessToken(command.getAccessToken()).build());
         log.debug("userInfo: {}", userInfo);
     
         // 유저 정보를 조회하여 없으면 회원가입 시킨다.
@@ -48,14 +45,20 @@ class DefaultSocialLoginService implements SocialLoginService {
         }
         
         // 있으면 바로 토큰을 발급하여 반환한다.
-        SocialLoginResponse response = createSocialLoginResponse(userInfo);
+        String accessToken = jwtManager.createAccessToken(CreateAccessToken.builder().email(userInfo.getEmail()).build());
+        String refreshToken = jwtManager.createRefreshToken(CreateRefreshToken.builder().email(userInfo.getEmail()).build());
+    
+        RefreshTokenEntity refreshTokenEntity = RefreshTokenEntity.builder()
+                                                                  .refreshTokenValue(refreshToken)
+                                                                  .userAgent(command.getUserAgent())
+                                                                  .subject(userInfo.getEmail()).build();
+        refreshTokenRepository.save(refreshTokenEntity);
+        SocialLoginResponse response = createSocialLoginResponse(accessToken, refreshToken);
         log.info("{} 님의 로그인 정보를 반환합니다.: {}", userInfo.getName(), response);
         return response;
     }
     
-    private SocialLoginResponse createSocialLoginResponse(JacksonOAuthAttributes userInfo) {
-        String accessToken = jwtManager.createAccessToken(CreateAccessToken.builder().email(userInfo.getEmail()).build());
-        String refreshToken = jwtManager.createRefreshToken(CreateRefreshToken.builder().email(userInfo.getEmail()).build());
+    private SocialLoginResponse createSocialLoginResponse(String accessToken, String refreshToken) {
         return SocialLoginResponse.builder()
                                   .accessToken(accessToken)
                                   .refreshToken(refreshToken)

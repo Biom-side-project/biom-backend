@@ -21,7 +21,7 @@ public class SecurityConfig {
     private final JwtManager jwtManager;
     private final UserDetailsService userDetailsService;
     
-    private static final String[] permittingEndpoints = {"/", "/health","/test/**", "/api/v1/login/**"};
+    private static final String[] permittingEndpoints = {"/", "/health","/test/**", "/api/v1/login/**", "/api/v1/users/refresh-token"};
     
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
