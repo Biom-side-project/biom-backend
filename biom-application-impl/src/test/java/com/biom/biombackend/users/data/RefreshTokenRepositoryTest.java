@@ -1,13 +1,18 @@
 package com.biom.biombackend.users.data;
 
+import com.biom.biombackend.BiomApplicationConfiguration;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@ActiveProfiles("test")
+@ContextConfiguration(classes = BiomApplicationConfiguration.class)
 class RefreshTokenRepositoryTest {
     
     @Autowired private RefreshTokenRepository refreshTokenRepository;
