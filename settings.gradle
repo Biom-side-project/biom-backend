@@ -1,1 +1,4 @@
 rootProject.name = 'biom-backend'
+
+include("biom-application-api")
+include("biom-application-impl")
