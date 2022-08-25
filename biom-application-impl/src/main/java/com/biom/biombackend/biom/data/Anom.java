@@ -3,7 +3,6 @@ package com.biom.biombackend.biom.data;
 import com.biom.biombackend.users.data.BiomUser;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Type;
@@ -18,10 +17,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class Biom extends BiomBaseEntity {
+public class Anom {
     @Id
     @Type(type = "uuid-char")
-    private UUID biomId;
+    private UUID anomId;
     
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
