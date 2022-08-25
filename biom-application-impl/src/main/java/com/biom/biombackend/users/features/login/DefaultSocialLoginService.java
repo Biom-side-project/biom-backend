@@ -38,15 +38,15 @@ class DefaultSocialLoginService implements SocialLoginService {
         // 유저 정보를 조회하여 없으면 회원가입 시킨다.
         BiomUser targetUser = biomUserRepository.getByEmail(userInfo.getEmail());
         if (targetUser == null) {
-            BiomUser userEntity = BiomUser.builder().email(userInfo.getEmail()).socialType(SocialProvider.GOOGLE)
+            targetUser = BiomUser.builder().email(userInfo.getEmail()).socialType(SocialProvider.GOOGLE)
                                           .role(Role.ROLE_MEMBER).pictureUri(userInfo.getProfileImageUrl()).username(userInfo.getName()).build();
-            biomUserRepository.save(userEntity);
-            log.info("회원가입 되었습니다.: {}", userEntity);
+            biomUserRepository.save(targetUser);
+            log.info("회원가입 되었습니다.: {}", targetUser);
         }
         
         // 있으면 바로 토큰을 발급하여 반환한다.
-        String accessToken = jwtManager.createAccessToken(CreateAccessToken.builder().email(userInfo.getEmail()).build());
-        String refreshToken = jwtManager.createRefreshToken(CreateRefreshToken.builder().email(userInfo.getEmail()).build());
+        String accessToken = jwtManager.createAccessToken(CreateAccessToken.builder().userId(targetUser.getUserId()).email(userInfo.getEmail()).build());
+        String refreshToken = jwtManager.createRefreshToken(CreateRefreshToken.builder().userId(targetUser.getUserId()).email(userInfo.getEmail()).build());
     
         RefreshTokenEntity refreshTokenEntity = RefreshTokenEntity.builder()
                                                                   .refreshTokenValue(refreshToken)
