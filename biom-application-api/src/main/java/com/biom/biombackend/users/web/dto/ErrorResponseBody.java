@@ -30,7 +30,8 @@ public class ErrorResponseBody {
     
     public static ErrorResponseBody of(Exception exception, String requestUri) {
         // TODO: 메시지가 있으면 넣고, 없으면 그대로
-        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR.value(), requestUri));
+        String message = exception.getMessage();
+        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message == null ? INTERNAL_SERVER_ERROR : message, HttpStatus.INTERNAL_SERVER_ERROR.value(), requestUri));
     }
     
     /* 사전에 정의되지 않은 예외를 상태코드로 응답하기 */
