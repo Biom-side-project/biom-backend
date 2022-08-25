@@ -8,5 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 @Builder
 public class CreateRefreshToken {
+    private Long userId;
     private String email;
 }

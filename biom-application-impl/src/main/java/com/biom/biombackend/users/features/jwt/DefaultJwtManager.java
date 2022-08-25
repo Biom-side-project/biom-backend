@@ -1,5 +1,6 @@
 package com.biom.biombackend.users.features.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ class DefaultJwtManager implements JwtManager {
     private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 30 * 1000L;   // 30분 // 30초
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 60 * 60 * 24 * 1000L; // 7일
+    private static final String USER_ID = "userId";
     
     private String secretKeyString;
     private final Key secretKey;
@@ -35,7 +37,8 @@ class DefaultJwtManager implements JwtManager {
         Objects.requireNonNull(command.getEmail());
         return Jwts.builder()
                        .setSubject(command.getEmail())
-                       .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
+                        .claim("userId", command.getUserId())
+                        .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_EXPIRE_TIME))
                        .signWith(ALGORITHM, secretKey)
                    .compact();
     }
@@ -45,6 +48,7 @@ class DefaultJwtManager implements JwtManager {
         Objects.requireNonNull(command.getEmail());
         return Jwts.builder()
                        .setSubject(command.getEmail())
+                       .claim("userId", command.getUserId())
                        .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_EXPIRE_TIME))
                        .signWith(ALGORITHM, secretKey)
                    .compact();
@@ -69,6 +73,15 @@ class DefaultJwtManager implements JwtManager {
                        .parseClaimsJws(token)
                        .getBody()
                        .getSubject();
+    }
+    
+    @Override
+    public Long resolveUserId(String token) {
+        return Jwts.parser()
+                   .setSigningKey(secretKey)
+                   .parseClaimsJws(token)
+                   .getBody()
+                   .get(USER_ID, Long.class);
     }
     
     /*
