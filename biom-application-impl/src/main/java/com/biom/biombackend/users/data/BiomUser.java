@@ -21,5 +21,6 @@ public class BiomUser {
     @Enumerated(value = EnumType.STRING)
     private SocialProvider socialType;
     
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 }

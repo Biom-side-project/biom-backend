@@ -8,5 +8,7 @@ public interface JwtManager {
     
     String resolveUsername(String token);
     
+    Long resolveUserId(String token);
+    
     boolean validateToken(String token);
 }
