@@ -19,12 +19,12 @@ public class RegionController {
     @GetMapping("/api/v1/region/region-code")
     public String getRegionCode(@RequestParam String sido,
                                 @Nullable @RequestParam String sigungu,
-                                @Nullable @RequestParam String eupmyendong,
+                                @Nullable @RequestParam String eupmyeondong,
                                 @Nullable @RequestParam String dongli) {
         return regionService.handle(GetRegionCode.builder()
                                                  .sidoName(sido)
                                                  .sigunguName(sigungu)
-                                                 .eupmyeondongName(eupmyendong)
+                                                 .eupmyeondongName(eupmyeondong)
                                                  .dongliName(dongli).build()).getRegionCode().toString();
     }
 }
