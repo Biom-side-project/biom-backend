@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @ToString
+@Setter
 public class BiomUser {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
@@ -18,6 +19,7 @@ public class BiomUser {
     private String username;
     private String pictureUri;
     private String email;
+    private String nickname;
     
     @Enumerated(value = EnumType.STRING)
     private SocialProvider socialType;
