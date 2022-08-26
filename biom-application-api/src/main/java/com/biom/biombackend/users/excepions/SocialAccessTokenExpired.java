@@ -1,4 +1,4 @@
-package com.biom.biombackend.users.exceptions;
+package com.biom.biombackend.users.excepions;
 
 public class SocialAccessTokenExpired extends ExceptionWithStatusCode{
     

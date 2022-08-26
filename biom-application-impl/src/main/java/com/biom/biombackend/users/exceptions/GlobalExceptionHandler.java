@@ -1,5 +1,6 @@
 package com.biom.biombackend.users.exceptions;
 
+import com.biom.biombackend.users.excepions.ExceptionWithStatusCode;
 import com.biom.biombackend.users.web.dto.ErrorResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -4,5 +4,6 @@ public interface BiomService {
     
     void handle(ReportBiom command);
     void handle(ReportAnom command);
-
+    
+    long handle(GetRegionalBiomCount command);
 }
