@@ -1,15 +1,21 @@
 package com.biom.biombackend.users.web;
 
+import com.biom.biombackend.users.features.jwt.AccessToken;
+import com.biom.biombackend.users.features.jwt.JwtManager;
 import com.biom.biombackend.users.features.jwt.ReissueTokens;
 import com.biom.biombackend.users.features.jwt.ReissueTokensHandler;
 import com.biom.biombackend.users.features.login.ProcessLogin;
 import com.biom.biombackend.users.features.login.SocialLoginRequest;
 import com.biom.biombackend.users.features.login.SocialLoginService;
+import com.biom.biombackend.users.features.userinfo.GetUserInfo;
+import com.biom.biombackend.users.features.userinfo.UserService;
 import com.biom.biombackend.users.web.dto.ReissueTokensRequest;
 import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.Access;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +23,8 @@ public class UserController {
     
     private final SocialLoginService socialLoginService;
     private final ReissueTokensHandler reissueTokensHandler;
+    private final UserService userService;
+    private final JwtManager jwtManager;
 
     @PostMapping("/api/v1/login/naver")
     public ResponseEntity<SuccessResponseBody> loginNaver(@RequestBody SocialLoginRequest request){
@@ -51,5 +59,15 @@ public class UserController {
                                                     .data(reissueTokensHandler.handle(ReissueTokens.builder()
                                                                                                    .refreshToken(request.getRefreshToken())
                                                                                                    .userAgent(userAgent).build())).build());
+    }
+    
+    @GetMapping("/api/v1/users/info")
+    public ResponseEntity<SuccessResponseBody> getUserInfo(@AccessToken String accessToken){
+        return ResponseEntity.ok().body(SuccessResponseBody.builder()
+                                                           .status(200)
+                                                           .message("유저 정보를 반환합니다.")
+                                                           .data(userService.handle(GetUserInfo.builder()
+                                                                                               .userId(jwtManager.resolveUserId(accessToken))
+                                                                                               .build())).build());
     }
 }
