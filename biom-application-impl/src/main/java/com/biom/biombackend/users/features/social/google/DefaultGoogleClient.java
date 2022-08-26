@@ -1,5 +1,6 @@
 package com.biom.biombackend.users.features.social.google;
 
+import com.biom.biombackend.users.excepions.SocialAccessTokenExpired;
 import com.biom.biombackend.users.features.social.JacksonOAuthAttributes;
 import com.biom.biombackend.users.features.social.SocialProvider;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -37,7 +38,7 @@ class DefaultGoogleClient implements GoogleClient {
         RequestEntity<Void> request = RequestEntity.get(uri).headers(headers).build();
         String body;
         JsonNode jsonNode;
-        JacksonOAuthAttributes attributes = null;
+        JacksonOAuthAttributes attributes;
         try {
             body = restTemplate.exchange(request, String.class).getBody();
             jsonNode = Objects.requireNonNull(objectMapper.readTree(body));
@@ -47,6 +48,7 @@ class DefaultGoogleClient implements GoogleClient {
     
         } catch (Exception exception) {
             exception.printStackTrace();
+            throw new SocialAccessTokenExpired("구글 리소스 서버로부터 유저 정보를 받지 못했습니다.", 404);
         }
         
         log.debug("recieved attribute: {}", attributes);

@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-public class Anom {
+public class Anom extends BiomBaseEntity{
     @Id
     @Type(type = "uuid-char")
     private UUID anomId;
