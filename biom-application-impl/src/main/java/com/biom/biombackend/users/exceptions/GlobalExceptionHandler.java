@@ -19,4 +19,13 @@ class GlobalExceptionHandler {
         log.error("exception: {}", exception.toString());
         return ResponseEntity.internalServerError().body(ErrorResponseBody.of(exception, request.getRequestURI()));
     }
+    
+    @ExceptionHandler(ExceptionWithStatusCode.class)
+    public ResponseEntity<ErrorResponseBody> on(ExceptionWithStatusCode exception, HttpServletRequest request) {
+        log.debug("exception: {}", exception.toString());
+        if (exception.getStatusCode() < 500){
+            return ResponseEntity.badRequest().body(ErrorResponseBody.badRequestOf(exception, exception.getMessage(), request.getRequestURI()));
+        }
+        return ResponseEntity.internalServerError().body(ErrorResponseBody.of(exception, request.getRequestURI()));
+    }
 }
