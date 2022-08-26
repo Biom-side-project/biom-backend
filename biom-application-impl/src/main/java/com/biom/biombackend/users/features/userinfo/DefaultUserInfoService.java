@@ -27,7 +27,8 @@ class DefaultUserInfoService implements UserService{
     }
     
     private GetUserInfoResponse createGetUserInfoResponse(BiomUser user) {
-        return GetUserInfoResponse.builder().username(user.getUsername()).email(user.getEmail())
-                                  .pictureUri(user.getPictureUri()).nickname("").build();
+        return GetUserInfoResponse.builder()
+                                  .username(user.getUsername()).email(user.getEmail())
+                                  .nickname(user.getNickname()).pictureUri(user.getPictureUri()).build();
     }
 }
