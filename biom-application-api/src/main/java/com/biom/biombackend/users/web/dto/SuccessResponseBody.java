@@ -3,13 +3,11 @@ package com.biom.biombackend.users.web.dto;
 public class SuccessResponseBody {
     
     private int status;
-    private String result;
     private String message;
     private Object data;
     
-    public SuccessResponseBody(int status, String result, String message, Object data) {
+    public SuccessResponseBody(int status, String message, Object data) {
         this.status = status;
-        this.result = result;
         this.message = message;
         this.data = data;
     }
@@ -20,27 +18,20 @@ public class SuccessResponseBody {
     
     @Override
     public String toString() {
-        return "SuccessResponseBody{" + "status=" + status + ", result='" + result + '\'' + ", message='" + message + '\'' + ", data=" + data + '}';
+        return "SuccessResponseBody{" + "status=" + status + ", message='" + message + '\'' + ", data=" + data + '}';
     }
     
     public int getStatus() { return status; }
-    public String getResult() { return result; }
     public String getMessage() { return message; }
     public Object getData() { return data; }
     
     public static class Builder{
         private int status;
-        private String result;
         private String message;
         private Object data;
         
         public Builder status(int status){
             this.status = status;
-            return this;
-        }
-    
-        public Builder result(String result){
-            this.result = result;
             return this;
         }
     
@@ -55,7 +46,7 @@ public class SuccessResponseBody {
         }
         
         public SuccessResponseBody build(){
-            return new SuccessResponseBody(this.status, this.result, this.message, this.data);
+            return new SuccessResponseBody(this.status, this.message, this.data);
         }
     }
 }

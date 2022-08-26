@@ -1,6 +1,7 @@
 package com.biom.biombackend.users.features.login;
 
 import com.biom.biombackend.users.data.*;
+import com.biom.biombackend.users.features.generatenickname.NicknameGenerator;
 import com.biom.biombackend.users.features.jwt.*;
 import com.biom.biombackend.users.features.social.JacksonOAuthAttributes;
 import com.biom.biombackend.users.features.social.SocialProvider;
@@ -21,6 +22,7 @@ class DefaultSocialLoginService implements SocialLoginService {
     private final GoogleClient googleClient;
     private final BiomUserRepository biomUserRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final NicknameGenerator nicknameGenerator;
     
     @Override
     public SocialLoginResponse loginNaver(SocialLoginRequest request) {
@@ -37,11 +39,17 @@ class DefaultSocialLoginService implements SocialLoginService {
     
         // 유저 정보를 조회하여 없으면 회원가입 시킨다.
         BiomUser targetUser = biomUserRepository.getByEmail(userInfo.getEmail());
+        
         if (targetUser == null) {
-            targetUser = BiomUser.builder().email(userInfo.getEmail()).socialType(SocialProvider.GOOGLE)
-                                          .role(Role.ROLE_MEMBER).pictureUri(userInfo.getProfileImageUrl()).username(userInfo.getName()).build();
+            targetUser = BiomUser.builder()
+                                 .email(userInfo.getEmail()).socialType(SocialProvider.GOOGLE).nickname(nicknameGenerator.randomNickname())
+                                 .role(Role.ROLE_MEMBER).pictureUri(userInfo.getProfileImageUrl()).username(userInfo.getName()).build();
             biomUserRepository.save(targetUser);
             log.info("회원가입 되었습니다.: {}", targetUser);
+        }
+        
+        if (targetUser.getNickname() == null) {
+            targetUser.setNickname(nicknameGenerator.randomNickname());
         }
         
         // 있으면 바로 토큰을 발급하여 반환한다.

@@ -40,10 +40,11 @@ public class ErrorResponseBody {
     }
     
     public static ErrorResponseBody forbiddenOf(Exception exception, Object message, String requestUri) {
-        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(),
-                                                                                                   message,
-                                                                                                   HttpStatus.FORBIDDEN.value(),
-                                                                                                   requestUri));
+        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, HttpStatus.FORBIDDEN.value(), requestUri));
+    }
+    
+    public static ErrorResponseBody notFoundOf(Exception exception, Object message, String requestUri) {
+        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, HttpStatus.NOT_FOUND.value(), requestUri));
     }
     
     public String asJson() throws JsonProcessingException {
