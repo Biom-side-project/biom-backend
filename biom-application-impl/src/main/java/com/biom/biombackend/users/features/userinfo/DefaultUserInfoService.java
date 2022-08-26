@@ -26,6 +26,15 @@ class DefaultUserInfoService implements UserService{
         return response;
     }
     
+    @Override
+    public void handle(UpdateNickname command) {
+        log.debug("handling command: {}", command);
+        BiomUser user = userRepository.findById(command.getUserId())
+                                          .orElseThrow(() -> new ExceptionWithStatusCode("존재하지 않는 유저입니다.", 404));
+        user.setNickname(command.getNewNickname());
+        userRepository.save(user);
+    }
+    
     private GetUserInfoResponse createGetUserInfoResponse(BiomUser user) {
         return GetUserInfoResponse.builder()
                                   .username(user.getUsername()).email(user.getEmail())
