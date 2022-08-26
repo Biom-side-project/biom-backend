@@ -1,6 +1,7 @@
 package com.biom.biombackend.biom.web;
 
 import com.biom.biombackend.biom.features.biom.BiomService;
+import com.biom.biombackend.biom.features.biom.GetRegionalBiomCount;
 import com.biom.biombackend.biom.features.biom.ReportAnom;
 import com.biom.biombackend.biom.features.biom.ReportBiom;
 import com.biom.biombackend.users.features.jwt.AccessToken;
@@ -11,9 +12,7 @@ import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,5 +41,13 @@ public class BiomController {
                                      .regionCode(request.getRegionCode()).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
                                                 .message("안옴 표시하였습니다.").build());
+    }
+    
+    @GetMapping("/api/v1/biom/region")
+    public ResponseEntity<SuccessResponseBody> getBiomCount(@RequestParam String regionCode){
+        long count = biomService.handle(GetRegionalBiomCount.builder().regionCode(regionCode).build());
+        return ResponseEntity.ok().body(SuccessResponseBody.builder()
+                                                .message("해당 지역의 비옴 개수를 반환합니다.")
+                                                .data(count).build());
     }
 }
