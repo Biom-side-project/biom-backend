@@ -8,6 +8,8 @@ import com.biom.biombackend.users.features.login.ProcessLogin;
 import com.biom.biombackend.users.features.login.SocialLoginRequest;
 import com.biom.biombackend.users.features.login.SocialLoginService;
 import com.biom.biombackend.users.features.userinfo.GetUserInfo;
+import com.biom.biombackend.users.features.userinfo.UpdateNickNameRequest;
+import com.biom.biombackend.users.features.userinfo.UpdateNickname;
 import com.biom.biombackend.users.features.userinfo.UserService;
 import com.biom.biombackend.users.web.dto.ReissueTokensRequest;
 import com.biom.biombackend.users.web.dto.SuccessResponseBody;
@@ -69,5 +71,17 @@ public class UserController {
                                                            .data(userService.handle(GetUserInfo.builder()
                                                                                                .userId(jwtManager.resolveUserId(accessToken))
                                                                                                .build())).build());
+    }
+    
+    @PutMapping("/api/v1/users/nickname")
+    public ResponseEntity<SuccessResponseBody> updateNickname(@AccessToken String accessToken,
+                                                              @RequestBody UpdateNickNameRequest request) {
+        userService.handle(UpdateNickname.builder()
+                                         .userId(jwtManager.resolveUserId(accessToken))
+                                         .newNickname(request.getNewNickname()).build());
+        return ResponseEntity.ok().body(SuccessResponseBody.builder()
+                                                           .status(200)
+                                                           .message("닉네임이 업데이트 되었습니다.")
+                                                           .data(null).build());
     }
 }
