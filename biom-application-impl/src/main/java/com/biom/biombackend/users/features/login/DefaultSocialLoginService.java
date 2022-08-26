@@ -48,10 +48,6 @@ class DefaultSocialLoginService implements SocialLoginService {
             log.info("회원가입 되었습니다.: {}", targetUser);
         }
         
-        if (targetUser.getNickname() == null) {
-            targetUser.setNickname(nicknameGenerator.randomNickname());
-        }
-        
         // 있으면 바로 토큰을 발급하여 반환한다.
         String accessToken = jwtManager.createAccessToken(CreateAccessToken.builder().userId(targetUser.getUserId()).email(userInfo.getEmail()).build());
         String refreshToken = jwtManager.createRefreshToken(CreateRefreshToken.builder().userId(targetUser.getUserId()).email(userInfo.getEmail()).build());
