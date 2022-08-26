@@ -9,4 +9,6 @@ public interface KoreaRegionCodeRepository extends JpaRepository<KoreaRegionCode
 //    KoreaRegionCode findBySidoCode(Integer sidoCode);
     KoreaRegionCode findBySidoNameAndSigunguNameAndEupmyeondongNameAndDongliName(String sidoName, String sigunguName, String eupmyeondongName, String dongliName);
     KoreaRegionCode findBySidoName(String sidoName);
+    
+    boolean existsByRegionCode(Long regionCode);
 }

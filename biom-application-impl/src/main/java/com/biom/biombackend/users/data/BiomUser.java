@@ -10,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
+@ToString
 public class BiomUser {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
