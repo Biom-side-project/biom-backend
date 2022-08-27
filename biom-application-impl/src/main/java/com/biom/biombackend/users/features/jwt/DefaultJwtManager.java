@@ -62,6 +62,7 @@ class DefaultJwtManager implements JwtManager {
                    .parseClaimsJws(token)
                    .getBody()
                    .getExpiration()
+                   .toInstant()
                    .toString();
     }
     

@@ -46,4 +46,17 @@ class DefaultJwtManagerTest {
         Long result = jwtManager.resolveUserId(accessToken);
         assertThat(result).isEqualTo(userId);
     }
+    
+    @Test
+    @DisplayName("시간 포맷 확인")
+    void test03() {
+        // given
+        CreateAccessToken command = CreateAccessToken.builder().userId(userId).email(email).build();
+        // when
+        String accessToken = jwtManager.createAccessToken(command);
+    
+        // then
+        String expireTimeFromToken = jwtManager.getExpireTimeFromToken(accessToken);
+        System.out.println("expireTimeFromToken = " + expireTimeFromToken);
+    }
 }
