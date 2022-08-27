@@ -24,4 +24,4 @@ logging:
       biom: debug
     org:
       springframework:
-        security: debug
+        security: info
