@@ -101,14 +101,14 @@
         <appender name="ASYNC_AWS_LOGS" class="ca.pjer.logback.AwsLogsAppender">
 
             <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-                <level>INFO</level>
+                <level>DEBUG</level>
             </filter>
 
             <layout>
                 <pattern>${FILE_LOG_PATTERN}</pattern>
             </layout>
-            <logGroupName>biom-log-group</logGroupName>
-            <logStreamUuidPrefix>biom-log-</logStreamUuidPrefix>
+            <logGroupName>biom-log-group-dev</logGroupName>
+            <logStreamUuidPrefix>biom-log-dev</logStreamUuidPrefix>
             <logRegion>ap-northeast-2</logRegion>
             <maxBatchLogEvents>50</maxBatchLogEvents>
             <maxFlushTimeMillis>30000</maxFlushTimeMillis>
