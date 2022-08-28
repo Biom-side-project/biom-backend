@@ -11,6 +11,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11
@@ -18,6 +19,19 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
+
+      - name: load application envs
+        run: |
+          touch ./biom-application-impl/src/main/resources/env.dev.properties
+          touch ./biom-application-impl/src/main/resources/application-dev.yml
+
+          echo "${{env.ENV-DEV-PROPERTIES}}" >> ./biom-application-impl/src/main/resources/env.dev.properties
+          echo "${{env.APPLICATION-DEV-YML}}" >> ./biom-application-impl/src/main/resources/application-dev.yml
+        shell: bash
+        env:
+          APPLICATION-DEV-YML: ${{secrets.APPLICATION_DEV_YML}}
+          ENV-DEV-PROPERTIES: ${{secrets.ENV_DEV_PROPERTIES}}
+
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
