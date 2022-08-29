@@ -9,9 +9,11 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @Slf4j
 @Component
@@ -63,6 +65,7 @@ class DefaultJwtManager implements JwtManager {
                    .getBody()
                    .getExpiration()
                    .toInstant()
+                   .atZone(TimeZone.getDefault().toZoneId())
                    .toString();
     }
     
