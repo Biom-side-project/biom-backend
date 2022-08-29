@@ -3,6 +3,8 @@ name: dev CI/CD to Elastic Beanstalk
 on:
   push:
     branches: [ "develop" ]
+    paths-ignore:
+      - '.github/**'
 
 permissions:
   contents: read
