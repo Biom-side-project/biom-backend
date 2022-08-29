@@ -5,6 +5,9 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
     <!--springProfile 태그를 사용하면 logback 설정파일에서 복수개의 프로파일을 설정할 수 있다.-->
+    <springProfile name="test">
+        <property resource="env.test.properties"/>
+    </springProfile>
     <springProfile name="local">
         <property resource="env.local.properties"/>
     </springProfile>
@@ -20,7 +23,7 @@
 
     <property name="LOG_PATH" value="${log.config.path}"/>
     <property name="LOG_FILE_NAME" value="${log.config.filename}"/>
-    <property name="ERR_LOG_FILE_NAME" value="error_log"/>
+    <property name="ERR_LOG_FILE_NAME" value="error_${log.config.filename}_log"/>
     <!-- 기본 스프링 부트 로그 패턴을 가져옴. -->
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN}"/>
     <property name="FILE_LOG_PATTERN" value="${FILE_LOG_PATTERN}"/>

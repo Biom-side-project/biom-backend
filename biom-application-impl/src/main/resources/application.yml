@@ -5,3 +5,7 @@ server:
     include-exception: true
     include-message: always
     include-stacktrace: never
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS,Asia/Seoul
