@@ -14,4 +14,9 @@ public class SingleComment {
     private String name;
     private int likes;
     private LocalDateTime createdAt;
+    
+    @Override
+    public String toString() {
+        return "SingleComment{" + "commentId=" + commentId + ", content='" + content + '\'' + ", name='" + name + '\'' + ", likes=" + likes + ", createdAt=" + createdAt + '}';
+    }
 }

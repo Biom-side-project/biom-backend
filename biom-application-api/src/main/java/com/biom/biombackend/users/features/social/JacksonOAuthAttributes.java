@@ -2,9 +2,7 @@ package com.biom.biombackend.users.features.social;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;
-import lombok.ToString;
 
-@ToString
 public abstract class JacksonOAuthAttributes {
     private SocialProvider socialProvider;
     @Getter
@@ -23,6 +21,11 @@ public abstract class JacksonOAuthAttributes {
     public abstract String getEmail();
     public abstract String getProfileImageUrl();
     public abstract SocialProvider getSocialProvider();
+    
+    @Override
+    public String toString() {
+        return "JacksonOAuthAttributes{" + "socialProvider=" + socialProvider + ", attributes=" + attributes + '}';
+    }
     
     /* Builder Class */
     public static class OAuthAttributesBuilder{

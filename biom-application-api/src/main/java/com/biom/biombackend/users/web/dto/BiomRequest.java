@@ -11,4 +11,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class BiomRequest {
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "BiomRequest{" + "regionCode=" + regionCode + '}';
+    }
 }

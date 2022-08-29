@@ -10,4 +10,9 @@ public class ReissueTokensResponse {
     private String refreshToken;
     private String accessExpireTime;
     private String refreshExpireTime;
+    
+    @Override
+    public String toString() {
+        return "ReissueTokensResponse{" + "accessToken='" + accessToken + '\'' + ", refreshToken='" + refreshToken + '\'' + ", accessExpireTime='" + accessExpireTime + '\'' + ", refreshExpireTime='" + refreshExpireTime + '\'' + '}';
+    }
 }

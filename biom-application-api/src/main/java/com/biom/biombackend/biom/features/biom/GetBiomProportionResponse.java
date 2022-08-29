@@ -12,4 +12,9 @@ public class GetBiomProportionResponse {
     private String sigunguName;
     private String eupmyeondongName;
     private String dongliName;
+    
+    @Override
+    public String toString() {
+        return "GetBiomProportionResponse{" + "biomProportion=" + biomProportion + ", regionCode=" + regionCode + ", sidoName='" + sidoName + '\'' + ", sigunguName='" + sigunguName + '\'' + ", eupmyeondongName='" + eupmyeondongName + '\'' + ", dongliName='" + dongliName + '\'' + '}';
+    }
 }

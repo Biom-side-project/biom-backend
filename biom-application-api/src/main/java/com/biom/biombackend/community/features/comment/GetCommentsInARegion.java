@@ -7,4 +7,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class GetCommentsInARegion {
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "GetCommentsInARegion{" + "regionCode=" + regionCode + '}';
+    }
 }

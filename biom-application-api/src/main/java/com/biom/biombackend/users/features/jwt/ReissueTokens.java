@@ -8,4 +8,9 @@ import lombok.Data;
 public class ReissueTokens {
     private String refreshToken;
     private String userAgent;
+    
+    @Override
+    public String toString() {
+        return "ReissueTokens{" + "refreshToken='" + refreshToken + '\'' + ", userAgent='" + userAgent + '\'' + '}';
+    }
 }

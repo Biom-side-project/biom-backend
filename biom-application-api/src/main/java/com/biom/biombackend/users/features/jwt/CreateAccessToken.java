@@ -10,4 +10,9 @@ import lombok.Data;
 public class CreateAccessToken {
     private Long userId;
     private String email;
+    
+    @Override
+    public String toString() {
+        return "CreateAccessToken{" + "userId=" + userId + ", email='" + email + '\'' + '}';
+    }
 }

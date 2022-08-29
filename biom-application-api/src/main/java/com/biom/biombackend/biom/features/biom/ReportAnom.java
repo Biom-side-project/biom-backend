@@ -8,4 +8,9 @@ import lombok.Data;
 public class ReportAnom {
     private Long userId;
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "ReportAnom{" + "userId=" + userId + ", regionCode=" + regionCode + '}';
+    }
 }

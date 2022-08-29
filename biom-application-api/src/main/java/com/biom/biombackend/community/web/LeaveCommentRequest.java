@@ -11,4 +11,9 @@ import lombok.NoArgsConstructor;
 public class LeaveCommentRequest {
     private String content;
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "LeaveCommentRequest{" + "content='" + content + '\'' + ", regionCode=" + regionCode + '}';
+    }
 }

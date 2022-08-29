@@ -9,4 +9,9 @@ import lombok.*;
 public class ProcessLogin {
     private String accessToken;
     private String userAgent;
+    
+    @Override
+    public String toString() {
+        return "ProcessLogin{" + "accessToken='" + accessToken + '\'' + ", userAgent='" + userAgent + '\'' + '}';
+    }
 }

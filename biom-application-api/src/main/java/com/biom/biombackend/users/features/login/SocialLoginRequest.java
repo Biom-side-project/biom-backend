@@ -8,4 +8,9 @@ import lombok.*;
 @Data
 public class SocialLoginRequest {
     private String accessToken;
+    
+    @Override
+    public String toString() {
+        return "SocialLoginRequest{" + "accessToken='" + accessToken + '\'' + '}';
+    }
 }

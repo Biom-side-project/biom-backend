@@ -11,4 +11,9 @@ public class GetRegionCodeResponse {
     private String sigunguName;
     private String eupmyeondongName;
     private String dongliName;
+    
+    @Override
+    public String toString() {
+        return "GetRegionCodeResponse{" + "regionCode=" + regionCode + ", sidoName='" + sidoName + '\'' + ", sigunguName='" + sigunguName + '\'' + ", eupmyeondongName='" + eupmyeondongName + '\'' + ", dongliName='" + dongliName + '\'' + '}';
+    }
 }

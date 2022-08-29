@@ -8,7 +8,7 @@ import com.biom.biombackend.users.features.login.ProcessLogin;
 import com.biom.biombackend.users.features.login.SocialLoginRequest;
 import com.biom.biombackend.users.features.login.SocialLoginService;
 import com.biom.biombackend.users.features.userinfo.GetUserInfo;
-import com.biom.biombackend.users.features.userinfo.UpdateNickNameRequest;
+import com.biom.biombackend.users.web.dto.UpdateNickNameRequest;
 import com.biom.biombackend.users.features.userinfo.UpdateNickname;
 import com.biom.biombackend.users.features.userinfo.UserService;
 import com.biom.biombackend.users.web.dto.ReissueTokensRequest;
@@ -16,8 +16,6 @@ import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.persistence.Access;
 
 @RestController
 @RequiredArgsConstructor

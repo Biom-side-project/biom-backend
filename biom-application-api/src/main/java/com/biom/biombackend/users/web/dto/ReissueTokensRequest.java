@@ -8,4 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 public class ReissueTokensRequest {
     private String refreshToken;
+    
+    @Override
+    public String toString() {
+        return "ReissueTokensRequest{" + "refreshToken='" + refreshToken + '\'' + '}';
+    }
 }

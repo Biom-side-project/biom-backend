@@ -10,4 +10,9 @@ public class GetUserInfoResponse {
     private String username;
     private String pictureUri;
     private String nickname;
+    
+    @Override
+    public String toString() {
+        return "GetUserInfoResponse{" + "email='" + email + '\'' + ", username='" + username + '\'' + ", pictureUri='" + pictureUri + '\'' + ", nickname='" + nickname + '\'' + '}';
+    }
 }

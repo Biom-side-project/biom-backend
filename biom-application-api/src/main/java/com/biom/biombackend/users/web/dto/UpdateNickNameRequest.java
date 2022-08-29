@@ -1,4 +1,4 @@
-package com.biom.biombackend.users.features.userinfo;
+package com.biom.biombackend.users.web.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,4 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateNickNameRequest {
     private String newNickname;
+    
+    @Override
+    public String toString() {
+        return "UpdateNickNameRequest{" + "newNickname='" + newNickname + '\'' + '}';
+    }
 }

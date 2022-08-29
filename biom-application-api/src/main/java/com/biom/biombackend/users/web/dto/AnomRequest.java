@@ -8,4 +8,9 @@ import lombok.*;
 @Getter
 public class AnomRequest {
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "AnomRequest{" + "regionCode=" + regionCode + '}';
+    }
 }

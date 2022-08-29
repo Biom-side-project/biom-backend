@@ -8,4 +8,9 @@ import lombok.*;
 @Data
 public class GetUserInfo {
     private String accessToken;
+    
+    @Override
+    public String toString() {
+        return "GetUserInfo{" + "accessToken='" + accessToken + '\'' + '}';
+    }
 }

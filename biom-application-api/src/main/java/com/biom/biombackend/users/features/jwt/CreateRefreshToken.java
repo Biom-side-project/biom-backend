@@ -10,4 +10,9 @@ import lombok.Data;
 public class CreateRefreshToken {
     private Long userId;
     private String email;
+    
+    @Override
+    public String toString() {
+        return "CreateRefreshToken{" + "userId=" + userId + ", email='" + email + '\'' + '}';
+    }
 }

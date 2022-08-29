@@ -12,4 +12,9 @@ public class GetCommentsInARegionResponse {
     private GetRegionCodeResponse region;
     private List<SingleComment> comments;
     private int total;
+    
+    @Override
+    public String toString() {
+        return "GetCommentsInARegionResponse{" + "region=" + region + ", comments=" + comments + ", total=" + total + '}';
+    }
 }

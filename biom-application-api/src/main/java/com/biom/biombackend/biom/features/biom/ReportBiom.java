@@ -8,4 +8,9 @@ import lombok.Data;
 public class ReportBiom {
     private Long userId;
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "ReportBiom{" + "userId=" + userId + ", regionCode=" + regionCode + '}';
+    }
 }

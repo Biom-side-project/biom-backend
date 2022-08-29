@@ -8,4 +8,9 @@ import lombok.Data;
 public class UpdateNickname {
     private Long userId;
     private String newNickname;
+    
+    @Override
+    public String toString() {
+        return "UpdateNickname{" + "userId=" + userId + ", newNickname='" + newNickname + '\'' + '}';
+    }
 }

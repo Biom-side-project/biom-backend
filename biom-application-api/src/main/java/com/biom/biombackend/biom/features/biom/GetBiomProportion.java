@@ -7,4 +7,9 @@ import lombok.Data;
 @Builder
 public class GetBiomProportion {
     private Long regionCode;
+    
+    @Override
+    public String toString() {
+        return "GetBiomProportion{" + "regionCode=" + regionCode + '}';
+    }
 }

@@ -7,4 +7,9 @@ import lombok.Data;
 @Builder
 public class GetUserInfo {
     private Long userId;
+    
+    @Override
+    public String toString() {
+        return "GetUserInfo{" + "userId=" + userId + '}';
+    }
 }
