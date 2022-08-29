@@ -6,4 +6,6 @@ public interface BiomService {
     void handle(ReportAnom command);
     
     long handle(GetRegionalBiomCount command);
+    
+    GetBiomProportionResponse handle(GetBiomProportion command);
 }

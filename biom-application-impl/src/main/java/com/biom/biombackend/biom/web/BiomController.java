@@ -1,9 +1,6 @@
 package com.biom.biombackend.biom.web;
 
-import com.biom.biombackend.biom.features.biom.BiomService;
-import com.biom.biombackend.biom.features.biom.GetRegionalBiomCount;
-import com.biom.biombackend.biom.features.biom.ReportAnom;
-import com.biom.biombackend.biom.features.biom.ReportBiom;
+import com.biom.biombackend.biom.features.biom.*;
 import com.biom.biombackend.users.features.jwt.AccessToken;
 import com.biom.biombackend.users.features.jwt.JwtManager;
 import com.biom.biombackend.users.web.dto.AnomRequest;
@@ -49,5 +46,14 @@ public class BiomController {
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
                                                 .message("해당 지역의 비옴 개수를 반환합니다.")
                                                 .data(count).build());
+    }
+    
+    @GetMapping("/api/v1/biom/proportion")
+    public ResponseEntity<SuccessResponseBody> getBiomProportion(@RequestParam Long regionCode) {
+        return ResponseEntity.ok().body(SuccessResponseBody.builder().status(200).message("비옴 비율을 반환합니다.")
+                                                           .data(biomService.handle(GetBiomProportion.builder()
+                                                                                                     .regionCode(regionCode)
+                                                                                                     .build()))
+                                                           .build());
     }
 }
