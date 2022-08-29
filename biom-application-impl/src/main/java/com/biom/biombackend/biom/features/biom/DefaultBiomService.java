@@ -1,6 +1,7 @@
 package com.biom.biombackend.biom.features.biom;
 
 import com.biom.biombackend.biom.data.*;
+import com.biom.biombackend.biom.features.calulatebiomproportion.BiomProportionCalculator;
 import com.biom.biombackend.users.data.BiomUser;
 import com.biom.biombackend.users.data.BiomUserRepository;
 import com.biom.biombackend.users.excepions.ExceptionWithStatusCode;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,12 +26,13 @@ class DefaultBiomService implements BiomService{
     private final KoreaRegionCodeRepository regionCodeRepository;
     private final BiomUserRepository userRepository;
     private final AnomRepository anomRepository;
+    private final BiomProportionCalculator calculator;
     
     @Override
     @Transactional
     public void handle(ReportBiom command) {
         log.debug("handling command: {}", command);
-        Long regionCode = Long.valueOf(command.getRegionCode());
+        Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
         }
@@ -44,7 +47,7 @@ class DefaultBiomService implements BiomService{
     @Transactional
     public void handle(ReportAnom command) {
         log.debug("handling command: {}", command);
-        Long regionCode = Long.valueOf(command.getRegionCode());
+        Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
         }
@@ -64,9 +67,33 @@ class DefaultBiomService implements BiomService{
             throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
         }
         LocalDateTime timeBefore = LocalDateTime.now().minus(TIME_INTERVAL, ChronoUnit.MINUTES);
-        log.debug("timeBefore: {}", timeBefore);
         long biomCount = biomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, LocalDateTime.now());
         log.debug("{} 의 biomCount 는 : {}", command.getRegionCode(), biomCount);
         return biomCount;
+    }
+    
+    @Override
+    public GetBiomProportionResponse handle(GetBiomProportion command) {
+        log.debug("handling command: {}", command);
+        Long regionCode = command.getRegionCode();
+        Optional<KoreaRegionCode> optionalRegion = regionCodeRepository.findById(regionCode);
+        if (optionalRegion.isEmpty()) {
+            throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
+        }
+        KoreaRegionCode region = optionalRegion.get();
+        double proportion = calculator.calculateBiomProportion(regionCode);
+        GetBiomProportionResponse response = createGetBiomProportionResponse(region, proportion);
+        log.debug("biom proportion response: {}", response);
+        return response;
+    }
+    
+    private GetBiomProportionResponse createGetBiomProportionResponse(KoreaRegionCode koreaRegionCode, double proportion) {
+        return GetBiomProportionResponse.builder()
+                                        .biomProportion(proportion)
+                                        .regionCode(koreaRegionCode.getRegionCode())
+                                        .sidoName(koreaRegionCode.getSidoName())
+                                        .sigunguName(koreaRegionCode.getSigunguName())
+                                        .eupmyeondongName(koreaRegionCode.getEupmyeondongName())
+                                        .dongliName(koreaRegionCode.getDongliName()).build();
     }
 }

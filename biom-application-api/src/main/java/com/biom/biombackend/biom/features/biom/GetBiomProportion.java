@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ReportAnom {
-    private Long userId;
+public class GetBiomProportion {
     private Long regionCode;
 }
