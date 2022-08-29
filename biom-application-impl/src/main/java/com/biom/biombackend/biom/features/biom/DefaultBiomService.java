@@ -1,7 +1,7 @@
 package com.biom.biombackend.biom.features.biom;
 
 import com.biom.biombackend.biom.data.*;
-import com.biom.biombackend.biom.features.calulatebiomproportion.BiomProportionCalculator;
+import com.biom.biombackend.biom.features.calculatebiomproportion.BiomProportionCalculator;
 import com.biom.biombackend.users.data.BiomUser;
 import com.biom.biombackend.users.data.BiomUserRepository;
 import com.biom.biombackend.users.excepions.RegionCodeNotFoundException;
