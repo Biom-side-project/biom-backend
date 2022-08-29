@@ -10,6 +10,6 @@ public class GetBiomProportion {
     
     @Override
     public String toString() {
-        return "GetBiomProportion{" + "regionCode=" + regionCode + '}';
+        return "{\"GetBiomProportion\":{" + "\"regionCode\":\"" + regionCode + "\"" + "}}";
     }
 }

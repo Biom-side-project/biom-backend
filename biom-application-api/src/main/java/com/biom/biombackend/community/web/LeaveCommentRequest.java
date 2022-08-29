@@ -14,6 +14,6 @@ public class LeaveCommentRequest {
     
     @Override
     public String toString() {
-        return "LeaveCommentRequest{" + "content='" + content + '\'' + ", regionCode=" + regionCode + '}';
+        return "{\"LeaveCommentRequest\":{" + "\"content\":\"" + content + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + "}}";
     }
 }

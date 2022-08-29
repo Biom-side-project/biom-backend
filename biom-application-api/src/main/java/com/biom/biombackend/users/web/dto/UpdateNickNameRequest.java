@@ -13,6 +13,6 @@ public class UpdateNickNameRequest {
     
     @Override
     public String toString() {
-        return "UpdateNickNameRequest{" + "newNickname='" + newNickname + '\'' + '}';
+        return "{\"UpdateNickNameRequest\":{" + "\"newNickname\":\"" + newNickname + "\"" + "}}";
     }
 }

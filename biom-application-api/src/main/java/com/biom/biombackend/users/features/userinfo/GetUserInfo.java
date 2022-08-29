@@ -10,6 +10,6 @@ public class GetUserInfo {
     
     @Override
     public String toString() {
-        return "GetUserInfo{" + "userId=" + userId + '}';
+        return "{\"GetUserInfo\":{" + "\"userId\":\"" + userId + "\"" + "}}";
     }
 }

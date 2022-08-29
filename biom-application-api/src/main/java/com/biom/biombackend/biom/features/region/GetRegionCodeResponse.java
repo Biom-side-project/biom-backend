@@ -14,6 +14,6 @@ public class GetRegionCodeResponse {
     
     @Override
     public String toString() {
-        return "GetRegionCodeResponse{" + "regionCode=" + regionCode + ", sidoName='" + sidoName + '\'' + ", sigunguName='" + sigunguName + '\'' + ", eupmyeondongName='" + eupmyeondongName + '\'' + ", dongliName='" + dongliName + '\'' + '}';
+        return "{\"GetRegionCodeResponse\":{" + "\"regionCode\":\"" + regionCode + "\"" + ", \"sidoName\":\"" + sidoName + "\"" + ", \"sigunguName\":\"" + sigunguName + "\"" + ", \"eupmyeondongName\":\"" + eupmyeondongName + "\"" + ", \"dongliName\":\"" + dongliName + "\"" + "}}";
     }
 }

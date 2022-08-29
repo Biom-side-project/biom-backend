@@ -56,4 +56,9 @@ public class ErrorResponseBody {
     }
     /* ********************** Getters for Jackson ********************** */
     public ErrorResponse getError() { return error; }
+    
+    @Override
+    public String toString() {
+        return "{\"ErrorResponseBody\":{" + "\"objectMapper\":" + objectMapper + ", \"error\":" + error + "}}";
+    }
 }

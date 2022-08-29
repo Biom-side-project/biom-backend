@@ -11,6 +11,6 @@ public class UpdateNickname {
     
     @Override
     public String toString() {
-        return "UpdateNickname{" + "userId=" + userId + ", newNickname='" + newNickname + '\'' + '}';
+        return "{\"UpdateNickname\":{" + "\"userId\":\"" + userId + "\"" + ", \"newNickname\":\"" + newNickname + "\"" + "}}";
     }
 }

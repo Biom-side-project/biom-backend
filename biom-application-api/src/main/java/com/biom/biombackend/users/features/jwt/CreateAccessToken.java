@@ -13,6 +13,6 @@ public class CreateAccessToken {
     
     @Override
     public String toString() {
-        return "CreateAccessToken{" + "userId=" + userId + ", email='" + email + '\'' + '}';
+        return "{\"CreateAccessToken\":{" + "\"userId\":\"" + userId + "\"" + ", \"email\":\"" + email + "\"" + "}}";
     }
 }

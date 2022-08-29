@@ -11,6 +11,6 @@ public class ReportAnom {
     
     @Override
     public String toString() {
-        return "ReportAnom{" + "userId=" + userId + ", regionCode=" + regionCode + '}';
+        return "{\"ReportAnom\":{" + "\"userId\":\"" + userId + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + "}}";
     }
 }

@@ -15,6 +15,6 @@ public class GetBiomProportionResponse {
     
     @Override
     public String toString() {
-        return "GetBiomProportionResponse{" + "biomProportion=" + biomProportion + ", regionCode=" + regionCode + ", sidoName='" + sidoName + '\'' + ", sigunguName='" + sigunguName + '\'' + ", eupmyeondongName='" + eupmyeondongName + '\'' + ", dongliName='" + dongliName + '\'' + '}';
+        return "{\"GetBiomProportionResponse\":{" + "\"biomProportion\":\"" + biomProportion + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + ", \"sidoName\":\"" + sidoName + "\"" + ", \"sigunguName\":\"" + sigunguName + "\"" + ", \"eupmyeondongName\":\"" + eupmyeondongName + "\"" + ", \"dongliName\":\"" + dongliName + "\"" + "}}";
     }
 }

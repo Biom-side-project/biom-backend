@@ -19,4 +19,9 @@ class ErrorResponse {
     public Object getMessage() { return message; }
     public int getStatus() { return status; }
     public String getRequestUri() { return requestUri; }
+    
+    @Override
+    public String toString() {
+        return "{\"ErrorResponse\":{" + "\"status\":\"" + status + "\"" + ", \"type\":\"" + type + "\"" + ", \"message\":" + message + ", \"requestUri\":\"" + requestUri + "\"" + "}}";
+    }
 }

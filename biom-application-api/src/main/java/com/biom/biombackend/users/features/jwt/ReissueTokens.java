@@ -11,6 +11,6 @@ public class ReissueTokens {
     
     @Override
     public String toString() {
-        return "ReissueTokens{" + "refreshToken='" + refreshToken + '\'' + ", userAgent='" + userAgent + '\'' + '}';
+        return "{\"ReissueTokens\":{" + "\"refreshToken\":\"" + refreshToken + "\"" + ", \"userAgent\":\"" + userAgent + "\"" + "}}";
     }
 }

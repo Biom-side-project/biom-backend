@@ -10,6 +10,6 @@ public class GetCommentsInARegion {
     
     @Override
     public String toString() {
-        return "GetCommentsInARegion{" + "regionCode=" + regionCode + '}';
+        return "{\"GetCommentsInARegion\":{" + "\"regionCode\":\"" + regionCode + "\"" + "}}";
     }
 }

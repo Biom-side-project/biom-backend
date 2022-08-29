@@ -16,7 +16,7 @@ public class AccessTokenArgumentResolver implements HandlerMethodArgumentResolve
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasP = parameter.hasParameterAnnotation(AccessToken.class);
-        log.debug("supportsParameter? {}: ", hasP);
+        log.debug("supportsParameter?: {} ", hasP);
         return hasP;
     }
     

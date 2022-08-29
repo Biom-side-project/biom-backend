@@ -18,11 +18,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Getter
-@ToString
 public abstract class BiomBaseEntity {
     @CreatedDate
     private LocalDateTime createdAt;
     
     @LastModifiedDate
     private LocalDateTime lastModifiedAt;
+    
+    @Override
+    public String toString() {
+        return "{\"BiomBaseEntity\":{" + "\"createdAt\":\"" + createdAt + "\"" + ", \"lastModifiedAt\":\"" + lastModifiedAt + "\"" + "}}";
+    }
 }

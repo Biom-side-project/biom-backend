@@ -13,6 +13,6 @@ public class GetRegionCode {
     
     @Override
     public String toString() {
-        return "GetRegionCode{" + "sidoName='" + sidoName + '\'' + ", sigunguName='" + sigunguName + '\'' + ", eupmyeondongName='" + eupmyeondongName + '\'' + ", dongliName='" + dongliName + '\'' + '}';
+        return "{\"GetRegionCode\":{" + "\"sidoName\":\"" + sidoName + "\"" + ", \"sigunguName\":\"" + sigunguName + "\"" + ", \"eupmyeondongName\":\"" + eupmyeondongName + "\"" + ", \"dongliName\":\"" + dongliName + "\"" + "}}";
     }
 }
