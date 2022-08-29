@@ -1,4 +1,4 @@
-package com.biom.biombackend.biom.features.calulatebiomproportion;
+package com.biom.biombackend.biom.features.calculatebiomproportion;
 
 public interface BiomProportionCalculator {
     

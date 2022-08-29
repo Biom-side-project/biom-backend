@@ -1,4 +1,4 @@
-package com.biom.biombackend.biom.features.calulatebiomproportion;
+package com.biom.biombackend.biom.features.calculatebiomproportion;
 
 import com.biom.biombackend.biom.data.AnomRepository;
 import com.biom.biombackend.biom.data.BiomRepository;

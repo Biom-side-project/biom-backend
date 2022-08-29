@@ -47,6 +47,10 @@ public class ErrorResponseBody {
         return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, HttpStatus.NOT_FOUND.value(), requestUri));
     }
     
+    public static ErrorResponseBody methodNotAllowedOf(Exception exception, Object message, String requestUri) {
+        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, HttpStatus.METHOD_NOT_ALLOWED.value(), requestUri));
+    }
+    
     public String asJson() throws JsonProcessingException {
         return objectMapper.writeValueAsString(this);
     }
