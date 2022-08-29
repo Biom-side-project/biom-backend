@@ -4,7 +4,7 @@ import com.biom.biombackend.biom.data.*;
 import com.biom.biombackend.biom.features.calulatebiomproportion.BiomProportionCalculator;
 import com.biom.biombackend.users.data.BiomUser;
 import com.biom.biombackend.users.data.BiomUserRepository;
-import com.biom.biombackend.users.excepions.ExceptionWithStatusCode;
+import com.biom.biombackend.users.excepions.RegionCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ class DefaultBiomService implements BiomService{
         log.debug("handling command: {}", command);
         Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
-            throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
+            throw new RegionCodeNotFoundException();
         }
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
         BiomUser user = userRepository.getReferenceById(command.getUserId());
@@ -49,7 +49,7 @@ class DefaultBiomService implements BiomService{
         log.debug("handling command: {}", command);
         Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
-            throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
+            throw new RegionCodeNotFoundException();
         }
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
         BiomUser user = userRepository.getReferenceById(command.getUserId());
@@ -64,7 +64,7 @@ class DefaultBiomService implements BiomService{
         log.debug("handling command: {}", command);
         long regionCode = Long.parseLong(command.getRegionCode());
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
-            throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
+            throw new RegionCodeNotFoundException();
         }
         LocalDateTime timeBefore = LocalDateTime.now().minus(TIME_INTERVAL, ChronoUnit.MINUTES);
         long biomCount = biomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, LocalDateTime.now());
@@ -78,7 +78,7 @@ class DefaultBiomService implements BiomService{
         Long regionCode = command.getRegionCode();
         Optional<KoreaRegionCode> optionalRegion = regionCodeRepository.findById(regionCode);
         if (optionalRegion.isEmpty()) {
-            throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
+            throw new RegionCodeNotFoundException();
         }
         KoreaRegionCode region = optionalRegion.get();
         double proportion = calculator.calculateBiomProportion(regionCode);

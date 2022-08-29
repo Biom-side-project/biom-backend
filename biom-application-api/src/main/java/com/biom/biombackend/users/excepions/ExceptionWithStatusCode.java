@@ -1,6 +1,6 @@
 package com.biom.biombackend.users.excepions;
 
-public class ExceptionWithStatusCode extends IllegalArgumentException{
+public class ExceptionWithStatusCode extends RuntimeException{
     
     private final int statusCode;
     
