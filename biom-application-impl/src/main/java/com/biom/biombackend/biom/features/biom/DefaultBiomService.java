@@ -32,7 +32,7 @@ class DefaultBiomService implements BiomService{
     @Transactional
     public void handle(ReportBiom command) {
         log.debug("handling command: {}", command);
-        Long regionCode = Long.valueOf(command.getRegionCode());
+        Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
         }
@@ -47,7 +47,7 @@ class DefaultBiomService implements BiomService{
     @Transactional
     public void handle(ReportAnom command) {
         log.debug("handling command: {}", command);
-        Long regionCode = Long.valueOf(command.getRegionCode());
+        Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new ExceptionWithStatusCode("존재하지 않는 지역 코드 입니다.", 400);
         }

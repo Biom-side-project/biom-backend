@@ -7,5 +7,5 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 public class AnomRequest {
-    private String regionCode;
+    private Long regionCode;
 }

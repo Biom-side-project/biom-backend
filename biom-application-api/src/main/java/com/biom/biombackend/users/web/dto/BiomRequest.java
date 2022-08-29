@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class BiomRequest {
-    private String regionCode;
+    private Long regionCode;
 }

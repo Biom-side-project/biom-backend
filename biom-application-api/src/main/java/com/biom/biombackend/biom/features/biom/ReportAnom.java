@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class ReportAnom {
     private Long userId;
-    private String regionCode;
+    private Long regionCode;
 }
