@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
-@ActiveProfiles("local")
+@ActiveProfiles("test")
 @ContextConfiguration(classes = BiomApplicationConfiguration.class)
 class KoreaRegionCodeRepositoryTest {
     
