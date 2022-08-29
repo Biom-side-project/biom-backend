@@ -1,4 +1,4 @@
-package com.biom.biombackend.users.excepions;
+package com.biom.biombackend.users.exceptions;
 
 public class RegionNotFoundException extends ExceptionWithStatusCode{
     

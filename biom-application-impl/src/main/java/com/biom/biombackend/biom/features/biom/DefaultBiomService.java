@@ -4,7 +4,7 @@ import com.biom.biombackend.biom.data.*;
 import com.biom.biombackend.biom.features.calculatebiomproportion.BiomProportionCalculator;
 import com.biom.biombackend.users.data.BiomUser;
 import com.biom.biombackend.users.data.BiomUserRepository;
-import com.biom.biombackend.users.excepions.RegionCodeNotFoundException;
+import com.biom.biombackend.users.exceptions.RegionCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

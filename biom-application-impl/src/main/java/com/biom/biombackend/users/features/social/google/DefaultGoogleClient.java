@@ -1,6 +1,6 @@
 package com.biom.biombackend.users.features.social.google;
 
-import com.biom.biombackend.users.excepions.SocialAccessTokenExpired;
+import com.biom.biombackend.users.exceptions.SocialAccessTokenExpired;
 import com.biom.biombackend.users.features.social.JacksonOAuthAttributes;
 import com.biom.biombackend.users.features.social.SocialProvider;
 import com.fasterxml.jackson.databind.JsonNode;

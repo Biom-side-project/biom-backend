@@ -2,8 +2,7 @@ package com.biom.biombackend.biom.features.region;
 
 import com.biom.biombackend.biom.data.KoreaRegionCode;
 import com.biom.biombackend.biom.data.KoreaRegionCodeRepository;
-import com.biom.biombackend.users.excepions.RegionCodeNotFoundException;
-import com.biom.biombackend.users.excepions.RegionNotFoundException;
+import com.biom.biombackend.users.exceptions.RegionNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

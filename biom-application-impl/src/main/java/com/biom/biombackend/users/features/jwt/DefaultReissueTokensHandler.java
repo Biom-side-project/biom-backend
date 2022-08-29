@@ -2,7 +2,7 @@ package com.biom.biombackend.users.features.jwt;
 
 import com.biom.biombackend.users.data.RefreshTokenEntity;
 import com.biom.biombackend.users.data.RefreshTokenRepository;
-import com.biom.biombackend.users.excepions.ExceptionWithStatusCode;
+import com.biom.biombackend.users.exceptions.ExceptionWithStatusCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
