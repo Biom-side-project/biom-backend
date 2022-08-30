@@ -13,6 +13,6 @@ public class CreateRefreshToken {
     
     @Override
     public String toString() {
-        return "{\"CreateRefreshToken\":{" + "\"userId\":\"" + userId + "\"" + ", \"email\":\"" + email + "\"" + "}}";
+        return "{\"CreateRefreshToken\":{" + "\"userId\":" + userId + "," + ((email != null) ? ("\"email\":\"" + email + "\"") : ("\"email\":" + null)) + "}}";
     }
 }

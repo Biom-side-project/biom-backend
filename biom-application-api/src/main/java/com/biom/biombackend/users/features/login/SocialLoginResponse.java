@@ -13,6 +13,6 @@ public class SocialLoginResponse {
     
     @Override
     public String toString() {
-        return "{\"SocialLoginResponse\":{" + "\"accessToken\":\"" + accessToken + "\"" + ", \"refreshToken\":\"" + refreshToken + "\"" + ", \"accessExpireTime\":\"" + accessExpireTime + "\"" + ", \"refreshExpireTime\":\"" + refreshExpireTime + "\"" + "}}";
+        return "{\"SocialLoginResponse\":{" + "" + ((accessToken != null) ? ("\"accessToken\":\"" + accessToken + "\"") : ("\"accessToken\":" + null)) + "," + ((refreshToken != null) ? ("\"refreshToken\":\"" + refreshToken + "\"") : ("\"refreshToken\":" + null)) + "," + ((accessExpireTime != null) ? ("\"accessExpireTime\":\"" + accessExpireTime + "\"") : ("\"accessExpireTime\":" + null)) + "," + ((refreshExpireTime != null) ? ("\"refreshExpireTime\":\"" + refreshExpireTime + "\"") : ("\"refreshExpireTime\":" + null)) + "}}";
     }
 }

@@ -11,6 +11,6 @@ public class ReportBiom {
     
     @Override
     public String toString() {
-        return "{\"ReportBiom\":{" + "\"userId\":\"" + userId + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + "}}";
+        return "{\"ReportBiom\":{" + "\"userId\":" + userId + ", \"regionCode\":" + regionCode + "}}";
     }
 }

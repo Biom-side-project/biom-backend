@@ -10,6 +10,6 @@ public class GetRegionalBiomCount {
     
     @Override
     public String toString() {
-        return "{\"GetRegionalBiomCount\":{" + "\"regionCode\":\"" + regionCode + "\"" + "}}";
+        return "{\"GetRegionalBiomCount\":{" + "" + ((regionCode != null) ? ("\"regionCode\":\"" + regionCode + "\"") : ("\"regionCode\":" + null)) + "}}";
     }
 }

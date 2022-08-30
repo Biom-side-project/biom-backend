@@ -11,6 +11,6 @@ public class GetUserInfo {
     
     @Override
     public String toString() {
-        return "{\"GetUserInfo\":{" + "\"accessToken\":\"" + accessToken + "\"" + "}}";
+        return "{\"GetUserInfo\":{" + "" + ((accessToken != null) ? ("\"accessToken\":\"" + accessToken + "\"") : ("\"accessToken\":" + null)) + "}}";
     }
 }

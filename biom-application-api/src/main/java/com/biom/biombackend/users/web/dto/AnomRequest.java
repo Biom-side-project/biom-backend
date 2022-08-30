@@ -11,6 +11,6 @@ public class AnomRequest {
     
     @Override
     public String toString() {
-        return "{\"AnomRequest\":{" + "\"regionCode\":\"" + regionCode + "\"" + "}}";
+        return "{\"AnomRequest\":{" + "\"regionCode\":" + regionCode + "}}";
     }
 }

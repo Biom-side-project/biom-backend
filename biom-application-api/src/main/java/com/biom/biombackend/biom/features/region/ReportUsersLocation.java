@@ -12,6 +12,6 @@ public class ReportUsersLocation {
     
     @Override
     public String toString() {
-        return "{\"ReportUsersLocation\":{" + "\"userId\":\"" + userId + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + "}}";
+        return "{\"ReportUsersLocation\":{" + "" + ((userId != null) ? ("\"userId\":\"" + userId + "\"") : ("\"userId\":" + null)) + "," + ((regionCode != null) ? ("\"regionCode\":\"" + regionCode + "\"") : ("\"regionCode\":" + null)) + "}}";
     }
 }

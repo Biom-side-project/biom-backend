@@ -14,6 +14,6 @@ public class BiomRequest {
     
     @Override
     public String toString() {
-        return "{\"BiomRequest\":{" + "\"regionCode\":\"" + regionCode + "\"" + "}}";
+        return "{\"BiomRequest\":{" + "\"regionCode\":" + regionCode + "}}";
     }
 }

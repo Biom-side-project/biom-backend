@@ -59,6 +59,6 @@ public class ErrorResponseBody {
     
     @Override
     public String toString() {
-        return "{\"ErrorResponseBody\":{" + "\"objectMapper\":" + objectMapper + ", \"error\":" + error + "}}";
+        return "{\"ErrorResponseBody\":{" + "\"objectMapper\":" + objectMapper + ",\"error\":" + error + "}}";
     }
 }

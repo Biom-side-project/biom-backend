@@ -14,6 +14,6 @@ public class LeaveComment {
     
     @Override
     public String toString() {
-        return "{\"LeaveComment\":{" + "\"userId\":\"" + userId + "\"" + ", \"regionCode\":\"" + regionCode + "\"" + ", \"content\":\"" + content + "\"" + "}}";
+        return "{\"LeaveComment\":{" + "\"userId\":" + userId + ",\"regionCode\":" + regionCode + "," + ((content != null) ? ("\"content\":\"" + content + "\"") : ("\"content\":" + null)) + "}}";
     }
 }

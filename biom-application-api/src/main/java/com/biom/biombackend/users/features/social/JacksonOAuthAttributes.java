@@ -24,7 +24,7 @@ public abstract class JacksonOAuthAttributes {
     
     @Override
     public String toString() {
-        return "{\"JacksonOAuthAttributes\":{" + "\"socialProvider\":\"" + socialProvider + "\"" + ", \"attributes\":" + attributes + "}}";
+        return "{\"JacksonOAuthAttributes\":{" + "" + ((socialProvider != null) ? ("\"socialProvider\":\"" + socialProvider + "\"") : ("\"socialProvider\":" + null)) + ",\"attributes\":" + attributes + "}}";
     }
     
     /* Builder Class */
