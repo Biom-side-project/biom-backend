@@ -8,7 +8,8 @@ import lombok.experimental.SuperBuilder;
 @Builder
 public class GetCommentsInARegion {
     private Long regionCode;
-    private Integer page;
+    @Builder.Default
+    private Integer page = 0;
     @Builder.Default
     private Integer size = 10;
     
