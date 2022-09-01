@@ -5,6 +5,7 @@ import com.biom.biombackend.biom.data.KoreaRegionCode;
 import com.biom.biombackend.biom.data.KoreaRegionCodeRepository;
 import com.biom.biombackend.community.data.Comment;
 import com.biom.biombackend.community.data.CommentRepository;
+import com.biom.biombackend.community.exceptions.CommentNotFoundException;
 import com.biom.biombackend.users.data.BiomUser;
 import com.biom.biombackend.users.data.BiomUserRepository;
 import org.junit.jupiter.api.*;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.transaction.TestTransaction;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -23,6 +25,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -85,7 +88,7 @@ class DefaultCommentServiceTest {
         assertThat(response.getTotal()).isEqualTo(times);
     }
     
-    @RepeatedTest(500)
+    @RepeatedTest(1)
     @DisplayName("comment 들을 가져올 수 있다.")
     void test03() {
         // given
@@ -102,6 +105,36 @@ class DefaultCommentServiceTest {
         
         // then
 //        assertThat(response.getTotal()).isEqualTo(times);
+    }
+    
+    @Test
+    @DisplayName("코멘트에 좋아요를 할 수 있다.")
+    void test04() {
+        // given
+        LeaveComment command = LeaveComment.builder().regionCode(regionCode).content(content).userId(userId).build();
+        UUID commentId = commentService.handle(command);
+        // when
+        LikeComment command2 = LikeComment.builder().commentId(commentId).userId(userId).build();
+        for (int i = 0; i < 10; i++) {
+            commentService.handle(command2);
+        }
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
+    
+        // then
+        Integer likes = comment.getLikes();
+        assertThat(likes).isEqualTo(10);
+    }
+    
+    @Test
+    @DisplayName("없는 코멘트를 찾으면 예외를 던진다.")
+    void test05() {
+        // given
+        UUID unsavedCommentId = UUID.randomUUID();
+        LikeComment command = LikeComment.builder().commentId(unsavedCommentId).userId(userId).build();
+        assertThatThrownBy(() -> commentService.handle(command)).isInstanceOf(CommentNotFoundException.class);
+        // when
+        
+        // then
     }
     
     void printResult(GetCommentsInARegionResponse response){

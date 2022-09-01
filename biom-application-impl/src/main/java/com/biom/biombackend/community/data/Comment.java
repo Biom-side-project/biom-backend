@@ -2,10 +2,7 @@ package com.biom.biombackend.community.data;
 
 import com.biom.biombackend.biom.data.KoreaRegionCode;
 import com.biom.biombackend.users.data.BiomUser;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Type;
 
@@ -32,8 +29,19 @@ public class Comment extends CommunityBaseEntity{
     @JoinColumn(name = "user_id")
     private BiomUser user;
     
+    @Column(name = "likes")
+    @Builder.Default
+    private Integer likes = 0;
+    
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "(" + "commentId = " + getCommentId() + ", " + "content = " + getContent() + ", " + "createdAt = " + getCreatedAt() + ", " + "lastModifiedAt = " + getLastModifiedAt() + ")";
+        return "{\"Comment\":{" + "\"commentId\":\"" + ((commentId != null) ? (commentId + "\"") : null) + ",\"content\":\"" + ((content != null) ? (content + "\"") : null) + ",\"likes\":" + likes + "}}";
+    }
+    
+    public void incrementLikes(){
+        if (this.likes == null){
+            this.likes = 0;
+        }
+        this.likes++;
     }
 }
