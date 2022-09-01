@@ -13,6 +13,6 @@ public class ReissueTokensResponse {
     
     @Override
     public String toString() {
-        return "{\"ReissueTokensResponse\":{" + "" + ((accessToken != null) ? ("\"accessToken\":\"" + accessToken + "\"") : ("\"accessToken\":" + null)) + "," + ((refreshToken != null) ? ("\"refreshToken\":\"" + refreshToken + "\"") : ("\"refreshToken\":" + null)) + "," + ((accessExpireTime != null) ? ("\"accessExpireTime\":\"" + accessExpireTime + "\"") : ("\"accessExpireTime\":" + null)) + "," + ((refreshExpireTime != null) ? ("\"refreshExpireTime\":\"" + refreshExpireTime + "\"") : ("\"refreshExpireTime\":" + null)) + "}}";
+        return "{\"ReissueTokensResponse\":{" + "\"accessToken\":" + ((accessToken != null) ? ("\"" + accessToken + "\"") : null) + ", \"refreshToken\":" + ((refreshToken != null) ? ("\"" + refreshToken + "\"") : null) + ", \"accessExpireTime\":" + ((accessExpireTime != null) ? ("\"" + accessExpireTime + "\"") : null) + ", \"refreshExpireTime\":" + ((refreshExpireTime != null) ? ("\"" + refreshExpireTime + "\"") : null) + "}}";
     }
 }

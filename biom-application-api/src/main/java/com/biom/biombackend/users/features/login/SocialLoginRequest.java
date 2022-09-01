@@ -11,6 +11,6 @@ public class SocialLoginRequest {
     
     @Override
     public String toString() {
-        return "{\"SocialLoginRequest\":{" + "" + ((accessToken != null) ? ("\"accessToken\":\"" + accessToken + "\"") : ("\"accessToken\":" + null)) + "}}";
+        return "{\"SocialLoginRequest\":{" + "\"accessToken\":" + ((accessToken != null) ? ("\"" + accessToken + "\"") : null) + "}}";
     }
 }

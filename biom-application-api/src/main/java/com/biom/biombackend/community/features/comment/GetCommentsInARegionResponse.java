@@ -15,6 +15,6 @@ public class GetCommentsInARegionResponse {
     
     @Override
     public String toString() {
-        return "{\"GetCommentsInARegionResponse\":{" + "\"region\":" + region + ",\"comments\":" + comments + ",\"total\":" + total + "}}";
+        return "{\"GetCommentsInARegionResponse\":{" + "\"region\":" + region + ", \"comments\":" + comments + ", \"total\":" + total + "}}";
     }
 }

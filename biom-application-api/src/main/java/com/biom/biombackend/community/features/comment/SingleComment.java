@@ -17,6 +17,6 @@ public class SingleComment {
     
     @Override
     public String toString() {
-        return "{\"SingleComment\":{" + "" + ((commentId != null) ? ("\"commentId\":\"" + commentId + "\"") : ("\"commentId\":" + null)) + "," + ((content != null) ? ("\"content\":\"" + content + "\"") : ("\"content\":" + null)) + "," + ((name != null) ? ("\"name\":\"" + name + "\"") : ("\"name\":" + null)) + ",\"likes\":" + likes + "," + ((createdAt != null) ? ("\"createdAt\":\"" + createdAt + "\"") : ("\"createdAt\":" + null)) + "}}";
+        return "{\"SingleComment\":{" + "\"commentId\":\"" + ((commentId != null) ? (commentId + "\"") : null) + ",\"content\":\"" + ((content != null) ? (content + "\"") : null) + ",\"name\":\"" + ((name != null) ? (name + "\"") : null) + ",\"likes\":" + likes + ",\"createdAt\":\"" + ((createdAt != null) ? (createdAt + "\"") : null) + "}}";
     }
 }
