@@ -3,12 +3,16 @@ package com.biom.biombackend.community.web;
 import com.biom.biombackend.community.features.comment.CommentService;
 import com.biom.biombackend.community.features.comment.GetCommentsInARegion;
 import com.biom.biombackend.community.features.comment.LeaveComment;
+import com.biom.biombackend.community.features.comment.LikeComment;
 import com.biom.biombackend.users.features.jwt.AccessToken;
 import com.biom.biombackend.users.features.jwt.JwtManager;
 import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +39,14 @@ public class CommentController {
                                                            .message("코멘트들을 반환합니다.")
                                                            .data(commentService.handle(GetCommentsInARegion.builder()
                                                                                                .regionCode(regionCode).build())).build());
+    }
+    
+    @PostMapping("/api/v1/community/comment/like")
+    public ResponseEntity<SuccessResponseBody> likeComment(@Valid @RequestBody LikeCommentRequest request){
+        commentService.handle(LikeComment.builder().commentId(UUID.fromString(request.getCommentId())).build());
+        return ResponseEntity.ok().body(SuccessResponseBody.builder()
+                                                .status(200)
+                                                .message("코멘트에 좋아요를 표시하였습니다.")
+                                                           .build());
     }
 }

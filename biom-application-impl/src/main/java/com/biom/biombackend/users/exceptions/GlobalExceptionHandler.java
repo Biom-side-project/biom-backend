@@ -19,6 +19,7 @@ class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseBody> on(Exception exception, HttpServletRequest request) {
         log.error("exception: {}", exception.toString());
+        exception.printStackTrace();
         return ResponseEntity.internalServerError().body(ErrorResponseBody.of(exception, request.getRequestURI()));
     }
     
