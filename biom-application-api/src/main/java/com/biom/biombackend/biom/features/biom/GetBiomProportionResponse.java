@@ -15,6 +15,6 @@ public class GetBiomProportionResponse {
     
     @Override
     public String toString() {
-        return "{\"GetBiomProportionResponse\":{" + "\"biomProportion\":" + biomProportion + ",\"regionCode\":" + regionCode + "," + ((sidoName != null) ? ("\"sidoName\":\"" + sidoName + "\"") : ("\"sidoName\":" + null)) + "," + ((sigunguName != null) ? ("\"sigunguName\":\"" + sigunguName + "\"") : ("\"sigunguName\":" + null)) + "," + ((eupmyeondongName != null) ? ("\"eupmyeondongName\":\"" + eupmyeondongName + "\"") : ("\"eupmyeondongName\":" + null)) + "," + ((dongliName != null) ? ("\"dongliName\":\"" + dongliName + "\"") : ("\"dongliName\":" + null)) + "}}";
+        return "{\"GetBiomProportionResponse\":{" + "\"biomProportion\":" + biomProportion + ", \"regionCode\":" + regionCode + ", \"sidoName\":" + ((sidoName != null) ? ("\"" + sidoName + "\"") : null) + ", \"sigunguName\":" + ((sigunguName != null) ? ("\"" + sigunguName + "\"") : null) + ", \"eupmyeondongName\":" + ((eupmyeondongName != null) ? ("\"" + eupmyeondongName + "\"") : null) + ", \"dongliName\":" + ((dongliName != null) ? ("\"" + dongliName + "\"") : null) + "}}";
     }
 }

@@ -11,6 +11,6 @@ public class ReissueTokensRequest {
     
     @Override
     public String toString() {
-        return "{\"ReissueTokensRequest\":{" + "" + ((refreshToken != null) ? ("\"refreshToken\":\"" + refreshToken + "\"") : ("\"refreshToken\":" + null)) + "}}";
+        return "{\"ReissueTokensRequest\":{" + "\"refreshToken\":" + ((refreshToken != null) ? ("\"" + refreshToken + "\"") : null) + "}}";
     }
 }

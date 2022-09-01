@@ -18,7 +18,7 @@ public class SuccessResponseBody {
     
     @Override
     public String toString() {
-        return "{\"SuccessResponseBody\":{" + "\"status\":" + status + "," + ((message != null) ? ("\"message\":\"" + message + "\"") : ("\"message\":" + null)) + ",\"data\":" + data + "}}";
+        return "{\"SuccessResponseBody\":{" + "\"status\":" + status + ", \"message\":" + ((message != null) ? ("\"" + message + "\"") : null) + ", \"data\":" + data + "}}";
     }
     
     public int getStatus() { return status; }

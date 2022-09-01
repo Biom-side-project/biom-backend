@@ -22,6 +22,6 @@ class ErrorResponse {
     
     @Override
     public String toString() {
-        return "{\"ErrorResponse\":{" + "\"status\":" + status + "," + ((type != null) ? ("\"type\":\"" + type + "\"") : ("\"type\":" + null)) + ",\"message\":" + message + "," + ((requestUri != null) ? ("\"requestUri\":\"" + requestUri + "\"") : ("\"requestUri\":" + null)) + "}}";
+        return "{\"ErrorResponse\":{" + "\"status\":" + status + ", \"type\":" + ((type != null) ? ("\"" + type + "\"") : null) + ", \"message\":" + message + ", \"requestUri\":" + ((requestUri != null) ? ("\"" + requestUri + "\"") : null) + "}}";
     }
 }

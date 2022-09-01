@@ -13,6 +13,6 @@ public class UpdateNickNameRequest {
     
     @Override
     public String toString() {
-        return "{\"UpdateNickNameRequest\":{" + "" + ((newNickname != null) ? ("\"newNickname\":\"" + newNickname + "\"") : ("\"newNickname\":" + null)) + "}}";
+        return "{\"UpdateNickNameRequest\":{" + "\"newNickname\":" + ((newNickname != null) ? ("\"" + newNickname + "\"") : null) + "}}";
     }
 }

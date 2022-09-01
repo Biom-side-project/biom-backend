@@ -11,6 +11,6 @@ public class ReissueTokens {
     
     @Override
     public String toString() {
-        return "{\"ReissueTokens\":{" + "" + ((refreshToken != null) ? ("\"refreshToken\":\"" + refreshToken + "\"") : ("\"refreshToken\":" + null)) + "," + ((userAgent != null) ? ("\"userAgent\":\"" + userAgent + "\"") : ("\"userAgent\":" + null)) + "}}";
+        return "{\"ReissueTokens\":{" + "\"refreshToken\":" + ((refreshToken != null) ? ("\"" + refreshToken + "\"") : null) + ", \"userAgent\":" + ((userAgent != null) ? ("\"" + userAgent + "\"") : null) + "}}";
     }
 }

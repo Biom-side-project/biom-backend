@@ -9,4 +9,9 @@ import java.util.UUID;
 public class LikeCommentRequest {
     @NotNull(message = "commentId 가 없습니다.")
     private String commentId;
+    
+    @Override
+    public String toString() {
+        return "{\"LikeCommentRequest\":{" + "\"commentId\":\"" + ((commentId != null) ? (commentId + "\"") : null) + "}}";
+    }
 }

@@ -13,6 +13,6 @@ public class GetUserInfoResponse {
     
     @Override
     public String toString() {
-        return "{\"GetUserInfoResponse\":{" + "" + ((email != null) ? ("\"email\":\"" + email + "\"") : ("\"email\":" + null)) + "," + ((username != null) ? ("\"username\":\"" + username + "\"") : ("\"username\":" + null)) + "," + ((pictureUri != null) ? ("\"pictureUri\":\"" + pictureUri + "\"") : ("\"pictureUri\":" + null)) + "," + ((nickname != null) ? ("\"nickname\":\"" + nickname + "\"") : ("\"nickname\":" + null)) + "}}";
+        return "{\"GetUserInfoResponse\":{" + "\"email\":" + ((email != null) ? ("\"" + email + "\"") : null) + ", \"username\":" + ((username != null) ? ("\"" + username + "\"") : null) + ", \"pictureUri\":" + ((pictureUri != null) ? ("\"" + pictureUri + "\"") : null) + ", \"nickname\":" + ((nickname != null) ? ("\"" + nickname + "\"") : null) + "}}";
     }
 }

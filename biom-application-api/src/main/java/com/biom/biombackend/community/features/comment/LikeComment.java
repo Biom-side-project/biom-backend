@@ -13,6 +13,6 @@ public class LikeComment {
     
     @Override
     public String toString() {
-        return "{\"LikeComment\":{" + "" + ((commentId != null) ? ("\"commentId\":\"" + commentId + "\"") : ("\"commentId\":" + null)) + ",\"userId\":" + userId + "}}";
+        return "{\"LikeComment\":{" + "\"commentId\":\"" + ((commentId != null) ? (commentId + "\"") : null) + ",\"userId\":" + userId + "}}";
     }
 }

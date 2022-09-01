@@ -12,6 +12,6 @@ public class ProcessLogin {
     
     @Override
     public String toString() {
-        return "{\"ProcessLogin\":{" + "" + ((accessToken != null) ? ("\"accessToken\":\"" + accessToken + "\"") : ("\"accessToken\":" + null)) + "," + ((userAgent != null) ? ("\"userAgent\":\"" + userAgent + "\"") : ("\"userAgent\":" + null)) + "}}";
+        return "{\"ProcessLogin\":{" + "\"accessToken\":" + ((accessToken != null) ? ("\"" + accessToken + "\"") : null) + ", \"userAgent\":" + ((userAgent != null) ? ("\"" + userAgent + "\"") : null) + "}}";
     }
 }
