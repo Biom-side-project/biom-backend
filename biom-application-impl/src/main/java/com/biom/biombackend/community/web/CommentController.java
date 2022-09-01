@@ -9,9 +9,11 @@ import com.biom.biombackend.users.features.jwt.JwtManager;
 import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @RestController
@@ -33,12 +35,15 @@ public class CommentController {
     }
     
     @GetMapping("/api/v1/community/comments")
-    public ResponseEntity<SuccessResponseBody> getComments(@RequestParam Long regionCode){
-        return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
-                                                           .message("코멘트들을 반환합니다.")
+    public ResponseEntity<SuccessResponseBody> getComments(@RequestParam Long regionCode,
+                                                           @Nullable @RequestParam(defaultValue = "0") Integer page,
+                                                           @Nullable @RequestParam(defaultValue = "10") Integer size) {
+        return ResponseEntity.ok().body(SuccessResponseBody.builder().status(200).message("코멘트들을 반환합니다.")
                                                            .data(commentService.handle(GetCommentsInARegion.builder()
-                                                                                               .regionCode(regionCode).build())).build());
+                                                                                                           .page(page)
+                                                                                                           .size(size)
+                                                                                                           .regionCode(regionCode).build()))
+                                                           .build());
     }
     
     @PostMapping("/api/v1/community/comment/like")

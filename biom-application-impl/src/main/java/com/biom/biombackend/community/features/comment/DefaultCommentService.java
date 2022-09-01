@@ -11,6 +11,7 @@ import com.biom.biombackend.users.data.BiomUserRepository;
 import com.biom.biombackend.users.exceptions.RegionCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -49,11 +50,12 @@ class DefaultCommentService implements CommentService {
     @Transactional
     public GetCommentsInARegionResponse handle(GetCommentsInARegion command) {
         log.debug("handling command: {}", command);
+        PageRequest pageable = PageRequest.of(command.getPage(), command.getSize());
         Long regionCode = command.getRegionCode();
         KoreaRegionCode region = regionCodeRepository.findById(regionCode)
                                                      .orElseThrow(RegionCodeNotFoundException::new);
-        List<Comment> commentEntities = commentRepository.findTop10ByRegionCodeOrderByCreatedAtDesc(region);
-        GetCommentsInARegionResponse response = createGetCommentsInARegionResponse(region, commentEntities);
+        List<Comment> comments = commentRepository.findByRegionCodeOrderByCreatedAtDesc(region, pageable).getContent();
+        GetCommentsInARegionResponse response = createGetCommentsInARegionResponse(region, comments);
         log.info("코멘트들을 반환합니다.: {}", response);
         return response;
     }
