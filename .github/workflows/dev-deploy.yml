@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "develop" ]
     paths-ignore:
-      - '.github/**'
+      - '.github/ISSUE_TEMPLATE/**'
 
 permissions:
   contents: read
@@ -58,8 +58,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: biom-backend
-          environment_name: Biombackend-env-1
+          application_name: ${{ secrets.BEANSTALK_DEV_APPLICATION_NAME }}
+          environment_name: ${{ secrets.BEANSTALK_DEV_ENVIRONMENT_NAME }}
           version_label: biom-backend-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
