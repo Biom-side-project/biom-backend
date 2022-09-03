@@ -24,7 +24,7 @@ public class CommentController {
     
     @PostMapping("/api/v1/community/comment")
     public ResponseEntity<SuccessResponseBody> postComment(@AccessToken String accessToken,
-                                                           @RequestBody LeaveCommentRequest request) {
+                                                           @Valid @RequestBody LeaveCommentRequest request) {
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
                                                            .status(200)
                                                            .message("코멘트를 등록하였습니다.")

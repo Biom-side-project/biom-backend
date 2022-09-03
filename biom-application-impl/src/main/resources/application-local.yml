@@ -1,6 +1,10 @@
-
-
 spring:
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
+
   datasource:
     url: jdbc:mysql://localhost:3306/biom
     username: root
@@ -25,8 +29,12 @@ logging:
       biom: debug
     org:
       springframework:
+        web: debug
         security: debug
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+
+
+    # --- sql 에 들어가는 값을 보려면 아래 주석을 해제하세요
+#      hibernate:
+#        type:
+#          descriptor:
+#            sql: trace

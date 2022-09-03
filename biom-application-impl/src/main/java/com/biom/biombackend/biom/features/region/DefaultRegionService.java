@@ -27,6 +27,8 @@ public class DefaultRegionService implements RegionService{
         if (entity == null) {
             throw new RegionNotFoundException();
         }
-        return GetRegionCodeResponse.builder().regionCode(entity.getRegionCode()).build();
+        GetRegionCodeResponse response = GetRegionCodeResponse.builder().regionCode(entity.getRegionCode()).build();
+        log.info("지역 정보를 반환합니다.: {}", response);
+        return response;
     }
 }

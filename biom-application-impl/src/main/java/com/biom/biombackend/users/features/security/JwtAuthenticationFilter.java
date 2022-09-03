@@ -30,6 +30,7 @@ class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = resolveToken(request);
         Authentication authentication;
         if (token != null && jwtManager.validateToken(token)) {
+            log.debug("request processing with valid token: {}", token);
             String username = jwtManager.resolveUsername(token);
     
             // UserDetails 객체 : SecurityUser
@@ -40,6 +41,7 @@ class JwtAuthenticationFilter extends OncePerRequestFilter {
     
             // SecurityContextHolder 에 Authentication 을 넣는다.
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            log.debug("Authentication set to SecurityHolder with JWT");
         }
         filterChain.doFilter(request, response);
     }

@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -73,7 +75,7 @@ public class UserController {
     
     @PutMapping("/api/v1/users/nickname")
     public ResponseEntity<SuccessResponseBody> updateNickname(@AccessToken String accessToken,
-                                                              @RequestBody UpdateNickNameRequest request) {
+                                                              @Valid @RequestBody UpdateNickNameRequest request) {
         userService.handle(UpdateNickname.builder()
                                          .userId(jwtManager.resolveUserId(accessToken))
                                          .newNickname(request.getNewNickname()).build());

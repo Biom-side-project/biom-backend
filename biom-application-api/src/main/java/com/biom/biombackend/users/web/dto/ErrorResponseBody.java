@@ -11,7 +11,9 @@ public class ErrorResponseBody {
     private static final String INTERNAL_SERVER_ERROR = "요청을 처리하지 못했습니다.";
     private transient final ObjectMapper objectMapper = new ObjectMapper();
     
+    private int status;
     private ErrorResponse error;
+    private String requestUri;
     
     public ErrorResponseBody(ErrorResponse error) { this.error = error; }
     
