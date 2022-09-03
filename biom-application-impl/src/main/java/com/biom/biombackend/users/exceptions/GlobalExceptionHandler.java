@@ -30,7 +30,7 @@ class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseBody> on(Exception exception, HttpServletRequest request) {
         log.error("Global exception: {}", exception.toString());
         exception.printStackTrace();
-        return ResponseEntity.internalServerError().body(ErrorResponseBody.of(exception, request.getRequestURI()));
+        return ResponseEntity.internalServerError().body(ErrorResponseBody.internalServerErrorOf(exception, request.getRequestURI()));
     }
     
     @ExceptionHandler(ExceptionWithStatusCode.class)
@@ -44,7 +44,17 @@ class GlobalExceptionHandler {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                                      .body(ErrorResponseBody.notFoundOf(exception, exception.getMessage(), request.getRequestURI()));
         }
-        return ResponseEntity.internalServerError().body(ErrorResponseBody.of(exception, request.getRequestURI()));
+        return ResponseEntity.internalServerError().body(ErrorResponseBody.internalServerErrorOf(exception, request.getRequestURI()));
+    }
+    
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseEntity<ErrorResponseBody> on(ApplicationException exception, HttpServletRequest request) {
+        HttpStatus statusCode = exception.getStatusCode();
+        ErrorType errorType = exception.getErrorCode();
+        String message = ms.getMessage(errorType.name(), null, "No available message", request.getLocale());
+        log.debug("Application Exception errorCode: {}, statusCode: {}", errorType, statusCode);
+        return ResponseEntity.status(statusCode)
+                             .body(ErrorResponseBody.of(errorType, message, request.getRequestURI()));
     }
     
     @ExceptionHandler(BindException.class)
@@ -52,14 +62,9 @@ class GlobalExceptionHandler {
         log.debug("exception: {}", exception.getMessage());
         List<FieldError> allFieldErrors = exception.getFieldErrors();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                       .body(ErrorResponseBody.badRequestOf(exception, allFieldErrors.stream().map(this::createFieldErrorMap).collect(Collectors.toList()), request.getRequestURI()));
-    }
-    
-    private HashMap<String, String> createFieldErrorMap(FieldError fieldError) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("field", fieldError.getField());
-        map.put("message", fieldError.getDefaultMessage());
-        return map;
+                       .body(ErrorResponseBody.detailedErrorsOf(exception,
+                                                                MessageUtils.seeDetails(exception.getMessage()),
+                                                                allFieldErrors.stream().map(this::createFieldErrorMap).collect(Collectors.toList()), request.getRequestURI()));
     }
     
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -69,5 +74,12 @@ class GlobalExceptionHandler {
                              .body(ErrorResponseBody.badRequestOf(exception,
                                                                   ms.getMessage("jsonParseError", null, request.getLocale()),
                                                                   request.getRequestURI()));
+    }
+    
+    private HashMap<String, String> createFieldErrorMap(FieldError fieldError) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("field", fieldError.getField());
+        map.put("message", fieldError.getDefaultMessage());
+        return map;
     }
 }
