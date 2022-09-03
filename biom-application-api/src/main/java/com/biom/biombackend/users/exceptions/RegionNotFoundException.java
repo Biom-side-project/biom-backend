@@ -1,10 +1,10 @@
 package com.biom.biombackend.users.exceptions;
 
-public class RegionNotFoundException extends ExceptionWithStatusCode{
-    
-    private static final String regionNotFoundExceptionMessage = "지역정보를 찾을 수 없습니다.";
+import org.springframework.http.HttpStatus;
+
+public class RegionNotFoundException extends ApplicationException{
     
     public RegionNotFoundException() {
-        super(regionNotFoundExceptionMessage, 404);
+        super(ErrorType.RegionNotFound, HttpStatus.NOT_FOUND);
     }
 }

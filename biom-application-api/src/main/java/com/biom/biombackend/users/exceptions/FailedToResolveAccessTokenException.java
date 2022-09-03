@@ -1,7 +1,9 @@
 package com.biom.biombackend.users.exceptions;
 
-public class FailedToResolveAccessTokenException extends ExceptionWithStatusCode {
+import org.springframework.http.HttpStatus;
+
+public class FailedToResolveAccessTokenException extends ApplicationException {
     public FailedToResolveAccessTokenException() {
-        super("Access Token could not be resolved.", 401);
+        super(ErrorType.FailedToResolveAccessToken, HttpStatus.UNAUTHORIZED);
     }
 }

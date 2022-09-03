@@ -33,20 +33,6 @@ class GlobalExceptionHandler {
         return ResponseEntity.internalServerError().body(ErrorResponseBody.internalServerErrorOf(exception, request.getRequestURI()));
     }
     
-    @ExceptionHandler(ExceptionWithStatusCode.class)
-    public ResponseEntity<ErrorResponseBody> on(ExceptionWithStatusCode exception, HttpServletRequest request) {
-        log.debug("exception: {}", exception.toString());
-        switch (exception.getStatusCode()) {
-            case 400:
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                                     .body(ErrorResponseBody.badRequestOf(exception, exception.getMessage(), request.getRequestURI()));
-            case 404:
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                     .body(ErrorResponseBody.notFoundOf(exception, exception.getMessage(), request.getRequestURI()));
-        }
-        return ResponseEntity.internalServerError().body(ErrorResponseBody.internalServerErrorOf(exception, request.getRequestURI()));
-    }
-    
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorResponseBody> on(ApplicationException exception, HttpServletRequest request) {
         HttpStatus statusCode = exception.getStatusCode();

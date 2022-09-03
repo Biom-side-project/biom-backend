@@ -2,9 +2,11 @@ package com.biom.biombackend.users.features.jwt;
 
 import com.biom.biombackend.users.data.RefreshTokenEntity;
 import com.biom.biombackend.users.data.RefreshTokenRepository;
-import com.biom.biombackend.users.exceptions.ExceptionWithStatusCode;
+import com.biom.biombackend.users.exceptions.ApplicationException;
+import com.biom.biombackend.users.exceptions.ErrorType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
@@ -24,10 +26,10 @@ class DefaultReissueTokensHandler implements ReissueTokensHandler{
         RefreshTokenEntity oldRefreshToken = refreshTokenRepository.findByRefreshTokenValue(command.getRefreshToken());
         log.debug("oldRefreshToken: {}", oldRefreshToken);
         if (oldRefreshToken == null) {
-            throw new ExceptionWithStatusCode("존재하지 않는 토큰입니다.", 400);
+            throw new ApplicationException(ErrorType.RefreshTokenNotFound, HttpStatus.NOT_FOUND);
         }
         if (!oldRefreshToken.getUserAgent().equals(command.getUserAgent())){
-            throw new ExceptionWithStatusCode("User-Agent 값이 유효하지 않습니다.", 400);
+            throw new ApplicationException(ErrorType.InvalidUserAgentValue, HttpStatus.BAD_REQUEST);
         }
         // 리프레시 토큰 발급
         String newAccessToken = jwtManager.createAccessToken(CreateAccessToken.builder().email(oldRefreshToken.getSubject())
