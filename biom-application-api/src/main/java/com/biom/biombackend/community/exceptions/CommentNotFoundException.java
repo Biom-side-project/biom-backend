@@ -1,9 +1,12 @@
 package com.biom.biombackend.community.exceptions;
 
-import com.biom.biombackend.users.exceptions.ExceptionWithStatusCode;
+import com.biom.biombackend.users.exceptions.ApplicationException;
+import com.biom.biombackend.users.exceptions.ErrorType;
+import org.springframework.http.HttpStatus;
 
-public class CommentNotFoundException extends ExceptionWithStatusCode {
+public class CommentNotFoundException extends ApplicationException {
+    
     public CommentNotFoundException() {
-        super("코멘트를 찾지 못했습니다.", 404);
+        super(ErrorType.CommentNotFound, HttpStatus.NOT_FOUND);
     }
 }

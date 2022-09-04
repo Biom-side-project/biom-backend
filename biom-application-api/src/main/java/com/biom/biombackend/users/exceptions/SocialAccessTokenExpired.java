@@ -1,8 +1,10 @@
 package com.biom.biombackend.users.exceptions;
 
-public class SocialAccessTokenExpired extends ExceptionWithStatusCode{
+import org.springframework.http.HttpStatus;
+
+public class SocialAccessTokenExpired extends ApplicationException{
     
-    public SocialAccessTokenExpired(String message, int statusCode) {
-        super(message, statusCode);
+    public SocialAccessTokenExpired() {
+        super(ErrorType.SocialAccessTokenExpired, HttpStatus.BAD_REQUEST);
     }
 }

@@ -1,10 +1,13 @@
 package com.biom.biombackend.biom.features.region;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@JsonInclude // 리 단위가 null 이어도 반환함.
 public class GetRegionCodeResponse {
     private Long regionCode;
     private String sidoName;

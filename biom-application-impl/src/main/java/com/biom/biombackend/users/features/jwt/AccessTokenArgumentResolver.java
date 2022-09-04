@@ -1,5 +1,6 @@
 package com.biom.biombackend.users.features.jwt;
 
+import com.biom.biombackend.users.exceptions.FailedToResolveAccessTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
@@ -15,14 +16,14 @@ public class AccessTokenArgumentResolver implements HandlerMethodArgumentResolve
     
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean hasP = parameter.hasParameterAnnotation(AccessToken.class);
-        log.debug("supportsParameter?: {} ", hasP);
-        return hasP;
+        boolean hasParameter = parameter.hasParameterAnnotation(AccessToken.class);
+        log.debug("checked parameter for @AccessToken: {} ", hasParameter);
+        return hasParameter;
     }
     
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         log.debug("resolving @AccessToken");
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String accessToken = resolveToken(request);
@@ -32,9 +33,16 @@ public class AccessTokenArgumentResolver implements HandlerMethodArgumentResolve
     
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring("Bearer ".length());
+        String token;
+        if (!StringUtils.hasText(bearerToken) && !bearerToken.startsWith("Bearer ")) {
+            throw new FailedToResolveAccessTokenException();
         }
-        return null;
+        try{
+            token = bearerToken.substring("Bearer ".length());
+        } catch (Exception exception) {
+            log.debug("caught exception: {}, throwing FailedToResolveAccessTokenException", exception.toString());
+            throw new FailedToResolveAccessTokenException();
+        }
+        return token;
     }
 }

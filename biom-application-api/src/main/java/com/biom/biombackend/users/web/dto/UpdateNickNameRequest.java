@@ -5,10 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.OverridesAttribute;
+import javax.validation.constraints.NotBlank;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UpdateNickNameRequest {
+    @NotBlank(message = "{validation.notBlank.users.nickname}")
     private String newNickname;
     
     @Override

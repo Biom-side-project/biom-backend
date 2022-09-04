@@ -48,7 +48,7 @@ class DefaultGoogleClient implements GoogleClient {
     
         } catch (Exception exception) {
             log.debug("exception: {}", exception.toString());
-            throw new SocialAccessTokenExpired("구글 리소스 서버로부터 유저 정보를 받지 못했습니다.", 404);
+            throw new SocialAccessTokenExpired();
         }
         
         log.debug("recieved attribute: {}", attributes);
