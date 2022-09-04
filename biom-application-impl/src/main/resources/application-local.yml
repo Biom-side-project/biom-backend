@@ -7,8 +7,8 @@ spring:
     throw-exception-if-no-handler-found: true
 
   jackson:
+    # ignores null fields in serialization
     default-property-inclusion: non_null
-  # ignores null fields in serialization
 
   datasource:
     url: jdbc:mysql://localhost:3306/biom
