@@ -8,8 +8,11 @@ import com.biom.biombackend.users.web.dto.BiomRequest;
 import com.biom.biombackend.users.web.dto.SuccessResponseBody;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,39 +21,46 @@ public class BiomController {
     
     private final BiomService biomService;
     private final JwtManager jwtManager;
+    private final MessageSource ms;
     
     @PostMapping("/api/v1/biom/biom")
     public ResponseEntity<SuccessResponseBody> biom(@AccessToken String accessToken,
-                                                    @RequestBody BiomRequest request){
+                                                    @RequestBody BiomRequest request,
+                                                    HttpServletRequest httpRequest){
         log.debug("accessToken: {}", accessToken);
         biomService.handle(ReportBiom.builder().userId(jwtManager.resolveUserId(accessToken))
                                    .regionCode(request.getRegionCode()).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                .message("비옴 표시하였습니다.").build());
+                                                .message(ms.getMessage("biom.biomed", null, httpRequest.getLocale())).build());
     }
     
     @PostMapping("/api/v1/biom/anom")
     public ResponseEntity<SuccessResponseBody> anom(@AccessToken String accessToken,
-                                                    @RequestBody AnomRequest request){
+                                                    @RequestBody AnomRequest request,
+                                                    HttpServletRequest httpRequest){
         log.debug("accessToken: {}", accessToken);
         biomService.handle(ReportAnom.builder()
                                      .userId(jwtManager.resolveUserId(accessToken))
                                      .regionCode(request.getRegionCode()).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                .message("안옴 표시하였습니다.").build());
+                                                .message(ms.getMessage("biom.anomed", null, httpRequest.getLocale())).build());
     }
     
     @GetMapping("/api/v1/biom/region")
-    public ResponseEntity<SuccessResponseBody> getBiomCount(@RequestParam String regionCode){
+    public ResponseEntity<SuccessResponseBody> getBiomCount(@RequestParam String regionCode,
+                                                            HttpServletRequest httpRequest){
         long count = biomService.handle(GetRegionalBiomCount.builder().regionCode(regionCode).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                .message("해당 지역의 비옴 개수를 반환합니다.")
+                                                .message(ms.getMessage("biom.region", null, httpRequest.getLocale()))
                                                 .data(count).build());
     }
     
     @GetMapping("/api/v1/biom/proportion")
-    public ResponseEntity<SuccessResponseBody> getBiomProportion(@RequestParam Long regionCode) {
-        return ResponseEntity.ok().body(SuccessResponseBody.builder().status(200).message("비옴 비율을 반환합니다.")
+    public ResponseEntity<SuccessResponseBody> getBiomProportion(@RequestParam Long regionCode,
+                                                                 HttpServletRequest httpRequest) {
+        return ResponseEntity.ok().body(SuccessResponseBody.builder()
+                                                           .status(200)
+                                                           .message(ms.getMessage("biom.proportion", null, httpRequest.getLocale()))
                                                            .data(biomService.handle(GetBiomProportion.builder()
                                                                                                      .regionCode(regionCode)
                                                                                                      .build()))
