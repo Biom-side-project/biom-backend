@@ -33,7 +33,7 @@ class DefaultCommentService implements CommentService {
     
     @Override
     @Transactional
-    public UUID handle(LeaveComment command) {
+    public LeaveCommentResponse handle(LeaveComment command) {
         log.debug("handling command: {}", command);
         Long regionCode = command.getRegionCode();
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
@@ -43,7 +43,7 @@ class DefaultCommentService implements CommentService {
         Comment comment = Comment.builder().commentId(commentId).user(user).content(command.getContent()).likes(0).regionCode(region).build();
         Comment savedComment = commentRepository.save(comment);
         log.info("코멘트를 저장하였습니다.: {}", savedComment);
-        return savedComment.getCommentId();
+        return LeaveCommentResponse.commentId(savedComment.getCommentId());
     }
     
     @Override
