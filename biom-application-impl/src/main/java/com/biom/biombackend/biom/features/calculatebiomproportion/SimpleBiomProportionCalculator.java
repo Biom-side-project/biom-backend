@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 @RequiredArgsConstructor
 @Slf4j
 class SimpleBiomProportionCalculator implements BiomProportionCalculator{
-    private static final long TIME_INTERVAL_MINUTE = 10L;
+    private static final long BIOM_PROPORTION_TIME_INTERVAL_MINUTE = 10L;
     
     private final BiomRepository biomRepository;
     private final AnomRepository anomRepository;
@@ -21,7 +21,7 @@ class SimpleBiomProportionCalculator implements BiomProportionCalculator{
     @Override
     public double calculateBiomProportion(Long regionCode) {
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime timeBefore = now.minus(TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime timeBefore = now.minus(BIOM_PROPORTION_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
         long biomCount = biomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, now);
         long anomCount = anomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, now);
         

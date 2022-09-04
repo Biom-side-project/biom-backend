@@ -20,7 +20,8 @@ import java.util.UUID;
 @Slf4j
 class DefaultBiomService implements BiomService{
     
-    private static final long TIME_INTERVAL = 10L;
+    private static final long BIOM_PROPORTION_TIME_INTERVAL_MINUTE = 30L;
+    private static final long BIOM_REPORT_TIME_INTERVAL_MINUTE = 10L;
     
     private final BiomRepository biomRepository;
     private final KoreaRegionCodeRepository regionCodeRepository;
@@ -30,7 +31,7 @@ class DefaultBiomService implements BiomService{
     
     @Override
     @Transactional
-    public void handle(ReportBiom command) {
+    public ReportBiomResponse handle(ReportBiom command) {
         log.debug("handling command: {}", command);
         Long regionCode = command.getRegionCode();
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
@@ -38,9 +39,35 @@ class DefaultBiomService implements BiomService{
         }
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
         BiomUser user = userRepository.getReferenceById(command.getUserId());
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime past = now.minus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        Optional<Biom> optionalBiom = biomRepository.findByUserAndRegionCodeAndCreatedAtBetween(user, region, past, now);
+        ReportBiomResponse response;
+        if (optionalBiom.isPresent()){
+            response = createAlreadyBiomedResponse(now, optionalBiom.get());
+            return response;
+        }
         Biom biom = Biom.builder().biomId(UUID.randomUUID()).user(user).regionCode(region).build();
-        biomRepository.save(biom);
+        Biom savedBiom = biomRepository.save(biom);
         log.debug("saved Biom: {}", biom);
+        response = ReportBiomResponse.builder().biomId(savedBiom.getBiomId())
+                                                     .createdAt(savedBiom.getCreatedAt()).type(BiomType.BiomedSuccessful)
+                                                     .build();
+        return response;
+    }
+    
+    private ReportBiomResponse createAlreadyBiomedResponse(LocalDateTime now, Biom biom) {
+        ReportBiomResponse response;
+        UUID biomId = biom.getBiomId();
+        LocalDateTime createdAt = biom.getCreatedAt();
+        LocalDateTime nextAvailableBiomTime = createdAt.plus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        long timeLeft = now.until(nextAvailableBiomTime, ChronoUnit.SECONDS);
+        response = ReportBiomResponse.builder().biomId(biomId).createdAt(createdAt)
+                                                     .type(BiomType.AlreadyBiomed)
+                                                     .timeLeft(new TimeLeft(ChronoUnit.SECONDS, timeLeft))
+                                                     .build();
+        log.info("response: {}", response);
+        return response;
     }
     
     @Override
@@ -66,7 +93,7 @@ class DefaultBiomService implements BiomService{
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new RegionCodeNotFoundException();
         }
-        LocalDateTime timeBefore = LocalDateTime.now().minus(TIME_INTERVAL, ChronoUnit.MINUTES);
+        LocalDateTime timeBefore = LocalDateTime.now().minus(BIOM_PROPORTION_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
         long biomCount = biomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, LocalDateTime.now());
         log.debug("{} 의 biomCount 는 : {}", command.getRegionCode(), biomCount);
         return biomCount;
