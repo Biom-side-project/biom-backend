@@ -18,20 +18,22 @@ import java.util.TimeZone;
 class DefaultJwtManager implements JwtManager {
     
     private static final SignatureAlgorithm ALGORITHM = SignatureAlgorithm.HS256;
-    private static final long ACCESS_TOKEN_EXPIRE_TIME = 60 * 30 * 1000L;   // 30분 // 30초
-    private static final long REFRESH_TOKEN_EXPIRE_TIME = 7 * 60 * 60 * 24 * 1000L; // 7일
+    private final long ACCESS_TOKEN_EXPIRE_TIME;
+    private final long REFRESH_TOKEN_EXPIRE_TIME;
     private static final String USER_ID_NAME = "userId";
     
-    private String secretKeyString;
     private final Key secretKey;
     
-    public DefaultJwtManager(@Value("${users.jwt.secret}") String secret) {
-        log.debug("SpringJwtManager initiating with secret");
-        this.secretKeyString = secret;
-        if (secretKeyString.length() != 4) {
+    public DefaultJwtManager(@Value("${users.jwt.secret}") String secret,
+                             @Value("${users.jwt.access-token.expiration-time}") long accessTokenExpirationTime,
+                             @Value("${users.jwt.refresh-token.expiration-time}") long refreshTokenExpirationTime) {
+        log.debug("DefaultJwtManager initiating with secret");
+        if (secret.length() != 4) {
             throw new IllegalArgumentException("the secret key string must be length of 4");
         }
-        byte[] keyBytes = Base64.getDecoder().decode(secretKeyString);
+        this.ACCESS_TOKEN_EXPIRE_TIME = accessTokenExpirationTime;
+        this.REFRESH_TOKEN_EXPIRE_TIME = refreshTokenExpirationTime;
+        byte[] keyBytes = Base64.getDecoder().decode(secret);
         this.secretKey = new SecretKeySpec(keyBytes, ALGORITHM.getJcaName());
     }
     

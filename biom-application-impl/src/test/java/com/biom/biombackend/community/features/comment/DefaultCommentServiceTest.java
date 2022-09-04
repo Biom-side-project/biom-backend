@@ -59,7 +59,7 @@ class DefaultCommentServiceTest {
         // given
         LeaveComment command = LeaveComment.builder().regionCode(regionCode).content(content).userId(userId).build();
         // when
-        commentId = commentService.handle(command);
+        UUID commentId = commentService.handle(command).getCommentId();
     
         // then
         Optional<Comment> optionalComment = commentRepository.findById(commentId);
@@ -77,7 +77,7 @@ class DefaultCommentServiceTest {
         ArrayList<UUID> uuids = new ArrayList<>();
         
         for (int i = 0; i < times; i++) {
-            UUID result = commentService.handle(command);
+            UUID result = commentService.handle(command).getCommentId();
             uuids.add(result);
         }
         GetCommentsInARegion command2 = GetCommentsInARegion.builder().regionCode(regionCode).build();
@@ -96,7 +96,7 @@ class DefaultCommentServiceTest {
         int times = 10;
         
         for (int i = 0; i < times; i++) {
-            UUID result = commentService.handle(command);
+            UUID result = commentService.handle(command).getCommentId();
         }
         GetCommentsInARegion command2 = GetCommentsInARegion.builder().regionCode(regionCode).build();
         // when
@@ -112,7 +112,7 @@ class DefaultCommentServiceTest {
     void test04() {
         // given
         LeaveComment command = LeaveComment.builder().regionCode(regionCode).content(content).userId(userId).build();
-        UUID commentId = commentService.handle(command);
+        UUID commentId = commentService.handle(command).getCommentId();
         // when
         LikeComment command2 = LikeComment.builder().commentId(commentId).userId(userId).build();
         for (int i = 0; i < 10; i++) {

@@ -1,10 +1,12 @@
 package com.biom.biombackend.biom.features.biom;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
+@JsonInclude
 public class GetBiomProportionResponse {
     private double biomProportion;
     private Long regionCode;
