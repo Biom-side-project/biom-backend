@@ -4,7 +4,6 @@ import com.biom.biombackend.users.exceptions.ErrorType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -34,14 +33,6 @@ public class ErrorResponseBody {
         return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message == null ? INTERNAL_SERVER_ERROR : message, requestUri));
     }
     
-    public static ErrorResponseBody detailedErrorsOf(ErrorType errorType, String message, List<?> errors, String requestUri) {
-        return new ErrorResponseBody(new ErrorResponse(errorType.name(), message, errors, requestUri));
-    }
-    
-    public static ErrorResponseBody detailedErrorsOf(Exception exception, String message, List<?> errors, String requestUri) {
-        return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, errors, requestUri));
-    }
-    
     /* 사전에 정의되지 않은 예외를 상태코드로 응답하기 */
     public static ErrorResponseBody badRequestOf(Exception exception, Object message, String requestUri) {
         return new ErrorResponseBody(new ErrorResponse(exception.getClass().getSimpleName(), message, requestUri));
@@ -63,6 +54,18 @@ public class ErrorResponseBody {
         return new ErrorResponseBody(new ErrorResponse(errorType.getErrorCode(), message, requestUri));
     }
     
+    public static MessageBuilder type(String type){
+        return new MessageBuilder(type);
+    }
+    
+    public static MessageBuilder type(ErrorType type){
+        return new MessageBuilder(type.name());
+    }
+    
+    public static MessageBuilder type(Exception exception) {
+        return new MessageBuilder(exception.getClass().getSimpleName());
+    }
+    
     public String asJson() throws JsonProcessingException {
         return objectMapper.writeValueAsString(this);
     }
@@ -72,5 +75,61 @@ public class ErrorResponseBody {
     @Override
     public String toString() {
         return "{\"ErrorResponseBody\":{" + "\"error\":" + error + "}}";
+    }
+    
+    /* ********************** Builders ********************** */
+    
+    public static class MessageBuilder {
+        private final String type;
+    
+        public MessageBuilder(String type) {
+            this.type = type;
+        }
+    
+        public RequestUriBuilder message(Object message){
+            return new RequestUriBuilder(type, message);
+        }
+    
+        public DetailsBuilder messageAnd(Object message){
+            return new DetailsBuilder(type, message);
+        }
+    }
+    
+    public static class DetailsBuilder {
+        private final String type;
+        private final Object message;
+    
+        public DetailsBuilder(String type, Object message) {
+            this.type = type;
+            this.message = message;
+        }
+        
+        public RequestUriBuilder details(Object details){
+            return new RequestUriBuilder(type, message, details);
+        }
+    }
+    
+    public static class RequestUriBuilder{
+        private final String type;
+        private final Object message;
+        private Object details;
+    
+        public RequestUriBuilder(String type, Object message) {
+            this.type = type;
+            this.message = message;
+        }
+    
+        public RequestUriBuilder(String type, Object message, Object details) {
+            this.type = type;
+            this.message = message;
+            this.details = details;
+        }
+    
+        public ErrorResponseBody requestUri(String requestUri){
+            if (details != null){
+                return new ErrorResponseBody(new ErrorResponse(type, message, details, requestUri));
+            }
+            return new ErrorResponseBody(new ErrorResponse(type, message, requestUri));
+        }
     }
 }

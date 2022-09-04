@@ -40,17 +40,21 @@ class GlobalExceptionHandler {
         String message = ms.getMessage(errorType.name(), null, "No available message", request.getLocale());
         log.debug("Application Exception errorCode: {}, statusCode: {}", errorType, statusCode);
         return ResponseEntity.status(statusCode)
-                             .body(ErrorResponseBody.of(errorType, message, request.getRequestURI()));
+                             .body(ErrorResponseBody.type(errorType)
+                                                    .message(message)
+                                                    .requestUri(request.getRequestURI()));
     }
     
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponseBody> on(BindException exception, HttpServletRequest request) {
         log.debug("exception: {}", exception.getMessage());
         List<FieldError> allFieldErrors = exception.getFieldErrors();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                       .body(ErrorResponseBody.detailedErrorsOf(exception,
-                                                                MessageUtils.seeDetails(exception.getMessage()),
-                                                                allFieldErrors.stream().map(this::createFieldErrorMap).collect(Collectors.toList()), request.getRequestURI()));
+        List<HashMap<String, String>> details = allFieldErrors.stream().map(this::createFieldErrorMap).collect(Collectors.toList());
+        ErrorResponseBody body = ErrorResponseBody.type(exception)
+                                                  .messageAnd(MessageUtils.seeDetails(exception.getMessage()))
+                                                  .details(details)
+                                                  .requestUri(request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
     
     @ExceptionHandler(HttpMessageNotReadableException.class)
