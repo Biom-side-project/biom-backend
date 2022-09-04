@@ -28,7 +28,7 @@ public class CommentController {
     public ResponseEntity<SuccessResponseBody> postComment(@AccessToken String accessToken,
                                                            @Valid @RequestBody LeaveCommentRequest request,
                                                            HttpServletRequest httpRequest) {
-        return ResponseEntity.ok().body(SuccessResponseBody.builder().status(200).message(ms.getMessage("community.comment.posted", null, httpRequest.getLocale()))
+        return ResponseEntity.ok().body(SuccessResponseBody.builder().message(ms.getMessage("community.comment.posted", null, httpRequest.getLocale()))
                                                            .data(commentService.handle(LeaveComment.builder()
                                                                                  .content(request.getContent())
                                                                                  .userId(jwtManager.resolveUserId(
@@ -43,7 +43,6 @@ public class CommentController {
                                                            @Nullable @RequestParam(defaultValue = "10") Integer size,
                                                            HttpServletRequest httpRequest) {
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
                                                            .message(ms.getMessage("community.comment.comments", null, httpRequest.getLocale()))
                                                            .data(commentService.handle(GetCommentsInARegion.builder().page(page)
                                                                                           .size(size)
@@ -56,7 +55,6 @@ public class CommentController {
                                                            HttpServletRequest httpRequest){
         commentService.handle(LikeComment.builder().commentId(UUID.fromString(request.getCommentId())).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
                                                            .message(ms.getMessage("community.comment.liked", null, httpRequest.getLocale()))
                                                            .build());
     }
