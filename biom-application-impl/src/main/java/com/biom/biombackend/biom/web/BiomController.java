@@ -28,10 +28,14 @@ public class BiomController {
                                                     @RequestBody BiomRequest request,
                                                     HttpServletRequest httpRequest){
         log.debug("accessToken: {}", accessToken);
-        biomService.handle(ReportBiom.builder().userId(jwtManager.resolveUserId(accessToken))
-                                   .regionCode(request.getRegionCode()).build());
-        return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                .message(ms.getMessage("biom.biomed", null, httpRequest.getLocale())).build());
+        ReportBiomResponse response = biomService.handle(ReportBiom.builder()
+                                                                 .userId(jwtManager.resolveUserId(accessToken))
+                                                                 .regionCode(request.getRegionCode()).build());
+        String message = ms.getMessage("biom.biomed", null, httpRequest.getLocale());
+        if (response.getType().equals(BiomType.AlreadyBiomed)){
+            message = ms.getMessage("biom.already_biomed", null, httpRequest.getLocale());
+        }
+        return ResponseEntity.ok().body(SuccessResponseBody.builder().message(message).data(response).build());
     }
     
     @PostMapping("/api/v1/biom/anom")
@@ -39,11 +43,14 @@ public class BiomController {
                                                     @RequestBody AnomRequest request,
                                                     HttpServletRequest httpRequest){
         log.debug("accessToken: {}", accessToken);
-        biomService.handle(ReportAnom.builder()
-                                     .userId(jwtManager.resolveUserId(accessToken))
-                                     .regionCode(request.getRegionCode()).build());
-        return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                .message(ms.getMessage("biom.anomed", null, httpRequest.getLocale())).build());
+        ReportAnomResponse response = biomService.handle(ReportAnom.builder()
+                                                                 .userId(jwtManager.resolveUserId(accessToken))
+                                                                 .regionCode(request.getRegionCode()).build());
+        String message = ms.getMessage("biom.anomed", null, httpRequest.getLocale());
+        if (response.getType().equals(AnomType.AlreadyAnomed)){
+            message = ms.getMessage("biom.already_anomed", null, httpRequest.getLocale());
+        }
+        return ResponseEntity.ok().body(SuccessResponseBody.builder().message(message).data(response).build());
     }
     
     @GetMapping("/api/v1/biom/region")
@@ -59,7 +66,6 @@ public class BiomController {
     public ResponseEntity<SuccessResponseBody> getBiomProportion(@RequestParam Long regionCode,
                                                                  HttpServletRequest httpRequest) {
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
                                                            .message(ms.getMessage("biom.proportion", null, httpRequest.getLocale()))
                                                            .data(biomService.handle(GetBiomProportion.builder()
                                                                                                      .regionCode(regionCode)

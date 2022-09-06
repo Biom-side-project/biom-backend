@@ -16,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @ToString
+@Getter
 public class Biom extends BiomBaseEntity {
     @Id
     @Type(type = "uuid-char")

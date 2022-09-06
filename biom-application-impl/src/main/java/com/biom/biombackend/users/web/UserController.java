@@ -35,7 +35,6 @@ public class UserController {
     public ResponseEntity<SuccessResponseBody> loginNaver(@RequestBody SocialLoginRequest request,
                                                           HttpServletRequest httpRequest){
         return ResponseEntity.ok(SuccessResponseBody.builder()
-                                                    .status(200)
                                                     .message(ms.getMessage("users.login.succeeded", null, httpRequest.getLocale()))
                                                     .data(socialLoginService.loginNaver(request)).build());
     }
@@ -44,7 +43,6 @@ public class UserController {
                                                            @RequestBody SocialLoginRequest request,
                                                            HttpServletRequest httpRequest) {
         return ResponseEntity.ok(SuccessResponseBody.builder()
-                                                    .status(200)
                                                     .message(ms.getMessage("users.login.succeeded", null, httpRequest.getLocale()))
                                                     .data(socialLoginService.loginGoogle(ProcessLogin.builder()
                                                                                                      .accessToken(request.getAccessToken())
@@ -54,7 +52,6 @@ public class UserController {
     @GetMapping("/api/v1/users/username")
     public ResponseEntity<SuccessResponseBody> getUsername(HttpServletRequest httpRequest) {
         return ResponseEntity.ok(SuccessResponseBody.builder()
-                                                    .status(200)
                                                     .message(ms.getMessage("users.info.username", null, httpRequest.getLocale()))
                                                     .data("이름이름").build());
     }
@@ -64,7 +61,6 @@ public class UserController {
                                                        @RequestBody ReissueTokensRequest request,
                                                        HttpServletRequest httpRequest) {
         return ResponseEntity.ok(SuccessResponseBody.builder()
-                                                    .status(200)
                                                     .message(ms.getMessage("users.login.jwt.renewed", null, httpRequest.getLocale()))
                                                     .data(reissueTokensHandler.handle(ReissueTokens.builder()
                                                                                                    .refreshToken(request.getRefreshToken())
@@ -75,7 +71,6 @@ public class UserController {
     public ResponseEntity<SuccessResponseBody> getUserInfo(@AccessToken String accessToken,
                                                            HttpServletRequest httpRequest){
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
                                                            .message(ms.getMessage("users.info", null, httpRequest.getLocale()))
                                                            .data(userService.handle(GetUserInfo.builder()
                                                                                                .userId(jwtManager.resolveUserId(accessToken))
@@ -90,7 +85,6 @@ public class UserController {
                                          .userId(jwtManager.resolveUserId(accessToken))
                                          .newNickname(request.getNewNickname()).build());
         return ResponseEntity.ok().body(SuccessResponseBody.builder()
-                                                           .status(200)
                                                            .message(ms.getMessage("users.info.nickname.updated", null, httpRequest.getLocale()))
                                                            .data(null).build());
     }

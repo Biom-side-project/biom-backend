@@ -31,8 +31,7 @@ public class RegionController {
         GetRegionCode command = GetRegionCode.builder().sidoName(sido).sigunguName(sigungu).eupmyeondongName(eupmyeondong)
                                            .dongliName(dongli).build();
         SuccessResponseBody body = SuccessResponseBody.builder()
-                                                      .status(200)
-                                                      .message(ms.getMessage("region.region-code", null, httpRequest.getLocale()))
+                                                      .message(ms.getMessage("region.region_code", null, httpRequest.getLocale()))
                                                        .data(regionService.handle(command)).build();
         return ResponseEntity.ok().body(body);
     }

@@ -2,8 +2,8 @@ package com.biom.biombackend.biom.features.biom;
 
 public interface BiomService {
     
-    void handle(ReportBiom command);
-    void handle(ReportAnom command);
+    ReportBiomResponse handle(ReportBiom command);
+    ReportAnomResponse handle(ReportAnom command);
     
     long handle(GetRegionalBiomCount command);
     
