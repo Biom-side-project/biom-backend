@@ -10,7 +10,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Getter
-@ToString
 @Setter
 public class BiomUser {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,4 +25,9 @@ public class BiomUser {
     
     @Enumerated(value = EnumType.STRING)
     private Role role;
+    
+    @Override
+    public String toString() {
+        return "{\"BiomUser\":{" + "\"userId\":" + userId + ", \"username\":" + ((username != null) ? ("\"" + username + "\"") : null) + ", \"pictureUri\":" + ((pictureUri != null) ? ("\"" + pictureUri + "\"") : null) + ", \"email\":" + ((email != null) ? ("\"" + email + "\"") : null) + ", \"nickname\":" + ((nickname != null) ? ("\"" + nickname + "\"") : null) + ", \"socialType\":" + ((socialType != null) ? ("\"" + socialType + "\"") : null) + ", \"role\":" + ((role != null) ? ("\"" + role + "\"") : null) + "}}";
+    }
 }

@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
-@ToString
 @Getter
 public class Biom extends BiomBaseEntity {
     @Id
@@ -29,4 +28,9 @@ public class Biom extends BiomBaseEntity {
     @ManyToOne
     @JoinColumn(name = "region_code", nullable = false)
     private KoreaRegionCode regionCode;
+    
+    @Override
+    public String toString() {
+        return "[{\"Biom\":{" + "\"biomId\":" + ((biomId != null) ? ("\"" + biomId + "\"") : null) + ", \"user\":" + user + ", \"regionCode\":" + regionCode + "}}, " + super.toString() + "]";
+    }
 }

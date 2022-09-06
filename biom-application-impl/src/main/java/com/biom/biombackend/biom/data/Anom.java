@@ -31,4 +31,9 @@ public class Anom extends BiomBaseEntity{
     @ManyToOne
     @JoinColumn(name = "region_code", nullable = false)
     private KoreaRegionCode regionCode;
+    
+    @Override
+    public String toString() {
+        return "[{\"Anom\":{" + "\"anomId\":" + ((anomId != null) ? ("\"" + anomId + "\"") : null) + ", \"user\":" + user + ", \"regionCode\":" + regionCode + "}}, " + super.toString() + "]";
+    }
 }

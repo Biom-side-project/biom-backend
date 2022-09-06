@@ -13,4 +13,9 @@ public class ReportBiomResponse {
     private BiomType type;
     private LocalDateTime createdAt;
     private TimeLeft timeLeft;
+    
+    @Override
+    public String toString() {
+        return "{\"ReportBiomResponse\":{" + "\"biomId\":" + ((biomId != null) ? ("\"" + biomId + "\"") : null) + ", \"type\":" + ((type != null) ? ("\"" + type + "\"") : null) + ", \"createdAt\":" + ((createdAt != null) ? ("\"" + createdAt + "\"") : null) + ", \"timeLeft\":" + timeLeft + "}}";
+    }
 }

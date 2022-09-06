@@ -13,4 +13,9 @@ public class ReportAnomResponse {
     private AnomType type;
     private LocalDateTime createdAt;
     private TimeLeft timeLeft;
+    
+    @Override
+    public String toString() {
+        return "{\"ReportAnomResponse\":{" + "\"anomId\":" + ((anomId != null) ? ("\"" + anomId + "\"") : null) + ", \"type\":" + ((type != null) ? ("\"" + type + "\"") : null) + ", \"createdAt\":" + ((createdAt != null) ? ("\"" + createdAt + "\"") : null) + ", \"timeLeft\":" + timeLeft + "}}";
+    }
 }

@@ -46,4 +46,9 @@ public class KoreaRegionCode {
     @Column(name = "created_date")
     private String createdDate;
     
+    
+    @Override
+    public String toString() {
+        return "{\"KoreaRegionCode\":{" + "\"regionCode\":" + regionCode + ", \"sidoCode\":" + sidoCode + ", \"sigunguCode\":" + sigunguCode + ", \"eupmyeondongCode\":" + eupmyeondongCode + ", \"dongliCode\":" + dongliCode + ", \"sidoName\":" + ((sidoName != null) ? ("\"" + sidoName + "\"") : null) + ", \"sigunguName\":" + ((sigunguName != null) ? ("\"" + sigunguName + "\"") : null) + ", \"eupmyeondongName\":" + ((eupmyeondongName != null) ? ("\"" + eupmyeondongName + "\"") : null) + ", \"dongliName\":" + ((dongliName != null) ? ("\"" + dongliName + "\"") : null) + ", \"createdDate\":" + ((createdDate != null) ? ("\"" + createdDate + "\"") : null) + "}}";
+    }
 }

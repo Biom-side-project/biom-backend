@@ -27,6 +27,6 @@ public abstract class BiomBaseEntity {
     
     @Override
     public String toString() {
-        return "{\"BiomBaseEntity\":{" + "\"createdAt\":\"" + createdAt + "\"" + ", \"lastModifiedAt\":\"" + lastModifiedAt + "\"" + "}}";
+        return "{\"BiomBaseEntity\":{" + "\"createdAt\":" + ((createdAt != null) ? ("\"" + createdAt + "\"") : null) + ", \"lastModifiedAt\":" + ((lastModifiedAt != null) ? ("\"" + lastModifiedAt + "\"") : null) + "}}";
     }
 }

@@ -35,7 +35,7 @@ public class Comment extends CommunityBaseEntity{
     
     @Override
     public String toString() {
-        return "{\"Comment\":{" + "\"commentId\":" + ((commentId != null) ? ("\"" + commentId + "\"") : null) + ", \"content\":" + ((content != null) ? ("\"" + content + "\"") : null) + ", \"regionCode\":" + regionCode + ", \"user\":" + user + ", \"likes\":" + likes + "}}";
+        return "[{\"Comment\":{" + "\"commentId\":" + ((commentId != null) ? ("\"" + commentId + "\"") : null) + ", \"content\":" + ((content != null) ? ("\"" + content + "\"") : null) + ", \"regionCode\":" + regionCode + ", \"user\":" + user + ", \"likes\":" + likes + "}}, " + super.toString() + "]";
     }
     
     public void incrementLikes(){

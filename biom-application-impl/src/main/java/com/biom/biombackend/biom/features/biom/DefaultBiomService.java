@@ -7,6 +7,7 @@ import com.biom.biombackend.users.data.BiomUserRepository;
 import com.biom.biombackend.users.exceptions.RegionCodeNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,13 +21,16 @@ import java.util.UUID;
 @Slf4j
 class DefaultBiomService implements BiomService{
     
-    private static final long BIOM_PROPORTION_TIME_INTERVAL_MINUTE = 30L;
-    private static final long BIOM_REPORT_TIME_INTERVAL_MINUTE = 10L;
+    @Value("${biom.proportion.time-interval}")
+    private long BIOM_PROPORTION_TIME_INTERVAL_SECONDS;
+    @Value("${biom.report.time-interval}")
+    private long BIOM_REPORT_TIME_INTERVAL_SECONDS;
     
     private final BiomRepository biomRepository;
     private final KoreaRegionCodeRepository regionCodeRepository;
     private final BiomUserRepository userRepository;
     private final AnomRepository anomRepository;
+    
     private final BiomProportionCalculator calculator;
     
     @Override
@@ -40,7 +44,7 @@ class DefaultBiomService implements BiomService{
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
         BiomUser user = userRepository.getReferenceById(command.getUserId());
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime past = now.minus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime past = now.minus(BIOM_REPORT_TIME_INTERVAL_SECONDS, ChronoUnit.SECONDS);
         Optional<Biom> optionalBiom = biomRepository.findByUserAndRegionCodeAndCreatedAtBetween(user, region, past, now);
         ReportBiomResponse response;
         if (optionalBiom.isPresent()){
@@ -67,7 +71,7 @@ class DefaultBiomService implements BiomService{
         KoreaRegionCode region = regionCodeRepository.getReferenceById(regionCode);
         BiomUser user = userRepository.getReferenceById(command.getUserId());
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime past = now.minus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime past = now.minus(BIOM_REPORT_TIME_INTERVAL_SECONDS, ChronoUnit.SECONDS);
         Optional<Anom> optionalAnom = anomRepository.findByUserAndRegionCodeAndCreatedAtBetween(user, region, past, now);
         ReportAnomResponse response;
         if (optionalAnom.isPresent()){
@@ -91,7 +95,7 @@ class DefaultBiomService implements BiomService{
         if (!regionCodeRepository.existsByRegionCode(regionCode)) {
             throw new RegionCodeNotFoundException();
         }
-        LocalDateTime timeBefore = LocalDateTime.now().minus(BIOM_PROPORTION_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime timeBefore = LocalDateTime.now().minus(BIOM_PROPORTION_TIME_INTERVAL_SECONDS, ChronoUnit.SECONDS);
         long biomCount = biomRepository.countByRegionCodeAndBetweenTimeInterval(regionCode, timeBefore, LocalDateTime.now());
         log.debug("{} 의 biomCount 는 : {}", command.getRegionCode(), biomCount);
         return biomCount;
@@ -116,7 +120,7 @@ class DefaultBiomService implements BiomService{
         ReportBiomResponse response;
         UUID biomId = biom.getBiomId();
         LocalDateTime createdAt = biom.getCreatedAt();
-        LocalDateTime nextAvailableBiomTime = createdAt.plus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime nextAvailableBiomTime = createdAt.plus(BIOM_REPORT_TIME_INTERVAL_SECONDS, ChronoUnit.SECONDS);
         long timeLeft = now.until(nextAvailableBiomTime, ChronoUnit.SECONDS);
         response = ReportBiomResponse.builder().biomId(biomId).createdAt(createdAt)
                                                      .type(BiomType.AlreadyBiomed)
@@ -130,7 +134,7 @@ class DefaultBiomService implements BiomService{
         ReportAnomResponse response;
         UUID anomId = biom.getAnomId();
         LocalDateTime createdAt = biom.getCreatedAt();
-        LocalDateTime nextAvailableBiomTime = createdAt.plus(BIOM_REPORT_TIME_INTERVAL_MINUTE, ChronoUnit.MINUTES);
+        LocalDateTime nextAvailableBiomTime = createdAt.plus(BIOM_REPORT_TIME_INTERVAL_SECONDS, ChronoUnit.SECONDS);
         long timeLeft = now.until(nextAvailableBiomTime, ChronoUnit.SECONDS);
         response = ReportAnomResponse.builder().anomId(anomId).createdAt(createdAt)
                                      .type(AnomType.AlreadyAnomed)

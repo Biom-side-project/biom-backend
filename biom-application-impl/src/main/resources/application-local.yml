@@ -11,7 +11,7 @@ spring:
     default-property-inclusion: non_null
 
   datasource:
-    url: jdbc:mysql://localhost:3306/biom
+    url: jdbc:mysql://localhost:3306/biom?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: root
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -37,4 +37,9 @@ public class RefreshTokenEntity {
     public int hashCode() {
         return getClass().hashCode();
     }
+    
+    @Override
+    public String toString() {
+        return "{\"RefreshTokenEntity\":{" + "\"refreshTokenId\":" + refreshTokenId + ", \"refreshTokenValue\":" + ((refreshTokenValue != null) ? ("\"" + refreshTokenValue + "\"") : null) + ", \"userAgent\":" + ((userAgent != null) ? ("\"" + userAgent + "\"") : null) + ", \"subject\":" + ((subject != null) ? ("\"" + subject + "\"") : null) + "}}";
+    }
 }
